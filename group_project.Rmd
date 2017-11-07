@@ -7,6 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+ma_schools <- read_csv("~/Documents/Fall 2017/SDS 291/massachusetts-public-schools-data/MA_Public_Schools_2017.csv")
+datadict <- read_csv("~/Documents/Fall 2017/SDS 291/massachusetts-public-schools-data/MA_Public_Schools_datadict.csv")
 ```
 
 
