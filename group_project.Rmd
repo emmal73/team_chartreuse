@@ -8,8 +8,21 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(readr)
-ma_schools <- read_csv("~/Documents/Fall 2017/SDS 291/massachusetts-public-schools-data/MA_Public_Schools_2017.csv")
-datadict <- read_csv("~/Documents/Fall 2017/SDS 291/massachusetts-public-schools-data/MA_Public_Schools_datadict.csv")
+library(tidyverse)
 ```
 
 
+```{r}
+ma_schools <- read.csv("ma_schools.csv")
+```
+
+```{r}
+str(ma_schools)
+```
+
+
+
+Key Next Steps
+1. Eliminate the variables that we know off-hand are not useful in our analysis. 
+2. Test for collinearity between variables that contain related information (for example, we will likely not include both Salary Totals and Average Salary, which both pertain to the salary of teachers).
+3. Create a "Percent Proficient" variable to be used as our response variable out of the categories provided.
