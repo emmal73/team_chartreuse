@@ -1,0 +1,11 @@
+---
+title: "Data Appendix"
+author: "Yue Kuang"
+date: "11/7/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+ma_schools<-read.csv("ma_schools.csv")
+```
