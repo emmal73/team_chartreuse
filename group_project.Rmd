@@ -20,7 +20,15 @@ ma_schools <- read.csv("ma_schools.csv")
 str(ma_schools)
 ```
 
-
+##get rid of schools without tenth grade 
+```{r}
+subset(ma_schools_pruned,
+       !is.na(ma_schools_pruned$MCAS_10thGrade_Math_A..))
+```
+##Look at format of each variable
+```{r}
+str(ma_schools_pruned, give.attr = FALSE)
+```
 
 Key Next Steps
 1. Eliminate the variables that we know off-hand are not useful in our analysis. 
