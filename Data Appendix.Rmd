@@ -1,0 +1,45 @@
+---
+title: "Data Appendix"
+author: "Yue Kuang"
+date: "11/7/2017"
+output: html_document
+---
+## Importing data
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+ma_schools<-read.csv("ma_schools.csv")
+```
+
+## Delete variable that we won't use completely.
+##Save the new dataset into a new dataframe called "ma_schools_pruned" 
+```{r}
+ma_schools_pruned<-ma_schools
+ma_schools_pruned$Address.1<-NULL
+ma_schools_pruned$Address.2<-NULL
+ma_schools_pruned$Phone<-NULL
+ma_schools_pruned$Fax<-NULL
+ma_schools_pruned$PK_Enrollment<-NULL
+ma_schools_pruned$K_Enrollment<-NULL
+ma_schools_pruned$X1_Enrollment<-NULL
+ma_schools_pruned$X2_Enrollment<-NULL
+ma_schools_pruned$X3_Enrollment<-NULL
+ma_schools_pruned$X4_Enrollment<-NULL
+ma_schools_pruned$X5_Enrollment<-NULL
+ma_schools_pruned$X6_Enrollment<-NULL
+ma_schools_pruned$X7_Enrollment<-NULL
+ma_schools_pruned$X8_Enrollment<-NULL
+ma_schools_pruned$X9_Enrollment<-NULL
+ma_schools_pruned$Contact.Name<-NULL
+```
+
+##Look at format of each variable
+```{r}
+str(ma_schools_pruned, give.attr = FALSE)
+```
+
+```{r}
+##get rid of schools that don't offer tenth grade 
+subset(ma_schools_pruned,
+       !is.na(ma_schools_pruned$MCAS_10thGrade_Math_A..))
+```
+
