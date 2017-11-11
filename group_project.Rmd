@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(tidyverse)
+library(mosaic)
 ```
 
 ## Importing data
@@ -20,57 +21,614 @@ ma_schools<-read.csv("ma_schools.csv")
 ```{r}
 pruned_ma_schools <- ma_schools %>%
   select(X10_Enrollment, TOTAL_Enrollment, First.Language.Not.English, X..English.Language.Learner, English.Language.Learner, X..English.Language.Learner, Students.With.Disabilities, X..Students.With.Disabilities, High.Needs, X..High.Needs, Economically.Disadvantaged, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College, MCAS_10thGrade_English_A.., MCAS_10thGrade_English_CPI, MCAS_10thGrade_Math_P.., MCAS_10thGrade_English_Incl..in.SGP..., MCAS_10thGrade_English_NI.., MCAS_10thGrade_English_P.., MCAS_10thGrade_English_P.A.., MCAS_10thGrade_English_SGP, MCAS_10thGrade_English_Stud..Incl..., MCAS_10thGrade_English_W.F.., MCAS_10thGrade_Math_A.., MCAS_10thGrade_Math_CPI, MCAS_10thGrade_Math_Incl..in.SGP..., MCAS_10thGrade_Math_NI.., MCAS_10thGrade_Math_P.., MCAS_10thGrade_Math_P.A.., MCAS_10thGrade_Math_SGP, MCAS_10thGrade_Math_Stud..Incl..., MCAS_10thGrade_Math_W.F.., X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)
-```
 
-There are 1861 schools (observations) and 67 variables (reduced from 302). All MCAS information is based on 10th graders. The variables are as follows:
-Maggie: 1-22
-Yue: 23 - 45
-Emma: 46 - 67
-40. `MCAS_10thGrade_English_A..` : an `int` of Advanced scores in English.  
-41. `MCAS_10thGrade_English_CPI` : the `num` measure of Composite Performance Index for English.
-42. `MCAS_10thGrade_Math_P..` : an `int` of Proficient scores in Math.
-43. `MCAS_10thGrade_English_Incl..in.SGP...` : an `int` of the students included in the Student Growth Percentile in English.
-44. `MCAS_10thGrade_English_NI..` : an `int` of Needs Improvement scores in English.
-45. `MCAS_10thGrade_English_P..` : an `int` of Proficient scores in English.
-46. `MCAS_10thGrade_English_P.A..` : an `int` of Proficient or Advanced scores in English.
-47. `MCAS_10thGrade_English_SGP` : a `num` measure of Student Growth Percentile in English.
-48. `MCAS_10thGrade_English_Stud..Incl...` : an `int` of the number of students included in the measure of SGP.
-49. `MCAS_10thGrade_English_W.F..` : an `int` of Warning/Failing scores in English.
-50. `MCAS_10thGrade_Math_A..` : an `int` of Advanced scores in Math.
-51. `MCAS_10thGrade_Math_CPI` : a `num` measure of Composite Performance Index for Math.
-52. `MCAS_10thGrade_Math_Incl..in.SGP...` : an `int` of the students included in the Student Growth Percentile in Math.
-53. `MCAS_10thGrade_Math_NI..` : an `int` of Needs Improvement scores in Math.
-54. `MCAS_10thGrade_Math_P.A..` : an `int` of Proficient or Advanced scores in Math.
-55. `MCAS_10thGrade_Math_SGP`: a `num` measure of Student Growth Percentile in English.
-56. `MCAS_10thGrade_Math_Stud..Incl...` : an `int` of the number of students included in the measure of SGP.
-57. `MCAS_10thGrade_Math_W.F..` : an `int` of Warning/Failing scores in Math.
-58. `X..MCAS_10thGrade_English_A` : an `int` percent of Advanced scores in English.
-59. ` X..MCAS_10thGrade_English_NI` : an `int` percent of Needs Improvement scores in English.
-60. `X..MCAS_10thGrade_English_P` : an `int` percent of Proficient scores in English.
-61. `X..MCAS_10thGrade_English_P.A` : an `int` percent of Proficient or Advanced scores in English.
-62. `X..MCAS_10thGrade_English_W.F` : an `int` percent of Warning/Failing scores in English.
-63. `X..MCAS_10thGrade_Math_A` : an `int` percent of Advanced scores in Math.
-64. `X..MCAS_10thGrade_Math_NI` : an `int` percent of Needs Improvement scores in Math.
-65. `X..MCAS_10thGrade_Math_P` : an `int` percent of Proficient scores in Math.
-66. `X..MCAS_10thGrade_Math_P.A` : an `int` percent of Proficient or Advanced scores in Math. 
-67. `X..MCAS_10thGrade_Math_W.F` : an `int` percent of Warning/Failing scores in Math.
-
-
-
-
-
-##get rid of schools without tenth grade 
-```{r}
-subset(pruned_ma_schools,
-       !is.na(pruned_ma_schools$MCAS_10thGrade_Math_A..))
 ```
 
 ```{r}
 str(pruned_ma_schools, give.attr = FALSE)
 ```
 
+
+### 1) X10_Enrollment
+
+```{r}
+favstats(~X10_Enrollment, data=pruned_ma_schools)
+```
+
+This variable records the number of 10th graders enrolled in a school. Both minimum and median are 0, with a max of 1048. The mean is 39.34498, much higher than the median, suggesting a rightward skew in the data, which makes sense when many observations have a value of 0.
+
+### 2) TOTAL_Enrollment
+
+```{r}
+favstats(~TOTAL_Enrollment, data=pruned_ma_schools)
+```
+
+This variable records the total enrollment in a school. The minimum is 0, which seems a little strange, and may present a venue for further investigation. The median is 436, and max is 4264, showing a lot of variety in institution size by the standards of my existing domain knowledge.
+
+### 3) First.Language.Not.English
+
+```{r}
+favstats(~First.Language.Not.English, data=pruned_ma_schools)
+```
+
+This variable enumerates the number of students in a school whose first language is not English. The range is wide, with a minimum of 0 and maximum of 2759 students. The distribution seems highly right skewed because while the median value is 42, our mean is 103.7643 students.
+
+### 4) X..English.Language.Learner
+
+```{r}
+favstats(~X..English.Language.Learner, data=pruned_ma_schools)
+```
+
+This variable measures the percentage of students at a school who are learning English. The minimum is 0, and maximum is 82.9. We might want to look out for outliers considering how much greater the max is than either the median (3.6) or mean (9.548432).
+### 5) English.Language.Learner
+
+```{r}
+favstats(~English.Language.Learner, data=pruned_ma_schools)
+```
+
+This variable measures the number of students in a school who are learning English. The minimum is 0, and maximum is 1020. It appears this variable also has an upward skew, considering how much greater the mean is (48.75892) than the median (16).
+
+### 6) Students.With.Disabilities
+
+```{r}
+favstats(~Students.With.Disabilities, data=pruned_ma_schools)
+```
+
+This varible measures the number of students with mental and/or physical disabilities at the school. Values range from 0 to 589 students. The mean number of disabled students is 84.88757.
+
+### 7) X..Students.With.Disabilities
+
+```{r}
+favstats(~X..Students.With.Disabilities, data=pruned_ma_schools)
+```
+
+This variable measures the percentage of students with mental and/or physical disabilities at the school. This ranges from 0 to 100%. Considering the much lower mean (18.22368) and median (16.1), we should definitely look out for outliers. I suspect there may be a few schools designated specifically for disabled students, based on the maximum percentage.
+
+### 8) High.Needs
+
+```{r}
+favstats(~High.Needs, data=pruned_ma_schools)
+```
+
+This variable measures the number of students in a school who are designated as "high needs" learners, often meaning a learning disability. There seems to be an upward skew, since mean (230.2314) is much greater than median (169).
+
+### 9) X..High.Needs
+
+```{r}
+favstats(~X..High.Needs, data=pruned_ma_schools)
+```
+
+This variable measures the percentage of students in a school who are designated as "high needs" learners, often meaning a learning disability. Like the previous variable pertaining to disability, this variable has a maximum of 100%, leading us to suspect outliers when taking into account the much lower mean (46.61622) and median (41.2) percentages.
+
+### 10) Economically.Disadvantaged
+
+```{r}
+favstats(~Economically.Disadvantaged, data=pruned_ma_schools)
+```
+
+This quantitative variable records the numbers of students who are economically disadvantaged. The minimum is 0 and maximum is 1997. However, the average is 155.927, which is far from the maximum. The variable makes sense, but we need to be careful with unusual values. 11 data points are missing.
+
+### 11) X..Economically.Disadvantaged
+
+```{r}
+favstats(~X..Economically.Disadvantaged, data=pruned_ma_schools)
+```
+
+The variable records the percentage of students who are financially disadvantaged in each school. The minimum is 0 percent, and the max is 94.4 percent. The mean is 31.81665. The pattern of data in this variable corresponds with the pattern of data in the last one (the number of students who are economically disadvantaged)Still 11 data missing
+
+### 12) X..African.American
+
+```{r}
+favstats(~X..African.American, data=pruned_ma_schools)
+```
+
+The percentage of African American students in the school.
+Both minimum and maximum are within the range of 0 and 100 (0 and 86.9). The mean is much larger than median, so we need to be careful with outliers. Still 11 data missing
+
+### 13) X..Asian
+
+```{r}
+favstats(~X..Asian, data=pruned_ma_schools)
+```
+
+Percentage of Asian in each school.
+min=0, max=73.7. Mean(6.05) is larger than median(2.6). Becareful with outliers. Still 11 data missing.
+### 14) X..Hispanic
+
+```{r}
+favstats(~X..Hispanic, data=pruned_ma_schools)
+```
+
+percentage of Hispanic students in each school
+min=0, max=98. Mean(18.99) is much larger than median(8.2). Need to becareful with outliers(school with very large amount of hispanice students). Still 11 values missing.
+
+### 15) X..White
+
+```{r}
+favstats(~X..White, data=pruned_ma_schools)
+```
+
+percentage of white students in each school
+min=0, max=86.6. Mean(62.32) is smaller than median(73.2). Need to becareful with outliers(school with very small amount of white students). Still 11 values missing.
+
+### 16) X..Native.American
+
+```{r}
+favstats(~X..Native.American, data=pruned_ma_schools)
+```
+
+percentage of Native American students in each school
+min=0, max=8. Mean(0.2334595) is close to median(0). It seems like there are very few Native American population in MA.  Still 11 values missing.
+
+### 17) X..Native.Hawaiian..Pacific.Islander
+
+```{r}
+favstats(~X..Native.Hawaiian..Pacific.Islander, data=pruned_ma_schools)
+```
+
+percentage of pacific islander students in each school
+min=0, max=6.1. Mean(0.098) is close to median(0). It seems like there are very few Native Haaiian Pacific Islander population in MA (which makes sense).  Still 11 values missing.
+
+### 18) X..Multi.Race..Non.Hispanic
+
+```{r}
+favstats(~X..Multi.Race..Non.Hispanic, data=pruned_ma_schools)
+```
+
+percentage of multi race (non hispanic) students in each school
+min=0, max=17.4. Mean(3.6) is close to median(3.2). Still 11 values missing.
+
+### 19) X..Males
+
+```{r}
+favstats(~X..Males, data=pruned_ma_schools)
+```
+
+percentage of male students in each school
+min=24, max=100 (there is all boys high school in MA). Mean(51.89) is close to median(51.4). The center value measurements make sense.Still 11 values missing.
+
+### 20) X..Females
+
+```{r}
+favstats(~X..Females, data=pruned_ma_schools)
+```
+
+percentage of female students in each school
+min=0, max=76. Mean(48) is close to median(48.6). The center value measurements make sense. Still 11 values missing.
+
+### 21) Total...of.Classes
+
+```{r}
+favstats(~Total...of.Classes, data=pruned_ma_schools)
+```
+
+number of classes in each school
+min=1, max=2001. Its very unusual that a school can have 2001 classes. Mean(240) is larger than median(179). Becareful of outliers. 3 values missing.
+
+### 22) Average.Class.Size
+
+```{r}
+favstats(~Average.Class.Size, data=pruned_ma_schools)
+```
+
+average class size in each school
+min=2, max=41.  Mean(18.32) is very close to median(18.6). These numbers make sense. 3 values missing.
+
+### 24) Salary.Totals
+
+```{r}
+colnames(pruned_ma_schools)[24] 
+favstats(~Salary.Totals, data=pruned_ma_schools)
+```
+
+total salary for teachers in each school
+min=55340, max=383866184.  Mean(56251775) is much larger than median(22697411). Becareful of very large outlier. The unit of this variable is dollars.  42 values missing.
+
+### 25) Average.Salary
+
+```{r}
+colnames(pruned_ma_schools)[25] 
+favstats(~Average.Salary, data=pruned_ma_schools)
+```
+
+Average.Salary for teachers in each school
+min=34588, max=100731.  Mean(74036) is very close to median(73471).  The unit of this variable is dollars.  42 values missing.
+
+### 26) FTE.Count
+
+```{r}
+colnames(pruned_ma_schools)[26] 
+favstats(~FTE.Count, data=pruned_ma_schools)
+```
+
+FTE.Count: Full-Time Equivalents (FTE) Average Membership: average enrollment across the school year, for pupils enrolled at local schools.
+min=2, max=4323.  Mean(707) is the two times of median(308). The distribution might be skewed.   42 values missing.
+
+### 27) In.District.Expenditures
+
+```{r}
+colnames(pruned_ma_schools)[27] 
+favstats(~FTE.Count, data=pruned_ma_schools)
+```
+
+In.District.Expenditures
+The unit for this variable is dollar.min=697550, max=1093104369.  Mean(151809656) is much larger than median(52933309). The distribution might be skewed.   42 values missing.
+
+### 28) Total.In.district.FTEs
+
+```{r}
+colnames(pruned_ma_schools)[28] 
+favstats(~Total.In.district.FTEs, data=pruned_ma_schools)
+```
+
+Total.In.district.FTEs:  Average enrollment across the school year for students enrolled at local schools and those publicly-funded students enrolled at other districts, including charter schools, special education collaboratives, and private special education schools.
+(The information above comes from http://profiles.doe.mass.edu/help/data.aspx?section=finance)
+min=38.4, max=56858.8.  Mean(9376.336) is much larger than median(4205.3). The distribution might be skewed.42 values missing
+
+### 29)Average.In.District.Expenditures.per.Pupil
+
+```{r}
+colnames(pruned_ma_schools)[29] 
+favstats(~Average.In.District.Expenditures.per.Pupil, data=pruned_ma_schools)
+```
+
+Average.In.District.Expenditures.per.Pupil: total expenditure divided by FTE average membership
+The unit for this variable is dollar.min= 9451.51, max=38780.85.  Mean(14573.86) is not much larger than median(13599.49). Still 42 values missing.
+
+### 30) Total Expenditures
+
+```{r}
+colnames(pruned_ma_schools)[30] 
+favstats(~Total.Expenditures, data=pruned_ma_schools)
+```
+
+Total.Expenditures (all kind of expenditure)
+The unit for this variable is dollar.min= 1132413, max=1269579527.  Mean(173119800) is much larger than median(58637410). There might be outliers.Still 42 values missing.
+
+### 31) Total.Pupil.FTEs
+
+```{r}
+colnames(pruned_ma_schools)[31] 
+favstats(~Total.Pupil.FTEs, data=pruned_ma_schools)
+```
+
+Total.Pupil.FTEs: total number of students who have FTE membership in schools
+min= 82, max=65964.6.  Mean(10466.07) is much larger than median(4392). There might be outliers.Still 42 values missing.
+
+### 32) Average.Expenditures.per.Pupil
+
+```{r}
+colnames(pruned_ma_schools)[32] 
+favstats(~Average.Expenditures.per.Pupil, data=pruned_ma_schools)
+```
+
+Average.Expenditures.per.Pupil
+The unit for this variable is dollar.min= 10399.97, max=30505.05 .  Mean(15038.25) is close to median(14137.48). Still 42 values missing
+
+### 33) X..Graduated
+
+```{r}
+colnames(pruned_ma_schools)[33] 
+favstats(~X..Graduated, data=pruned_ma_schools)
+```
+
+Percentage of students graduated from the school
+min= 0, max=100 Mean(83) is close to median(82). 11 values missing.
+
+### 34) X..Still.in.School
+
+```{r}
+colnames(pruned_ma_schools)[34] 
+favstats(~X..Still.in.School, data=pruned_ma_schools)
+```
+
+Percentage of students who have earned a Certificate of Attainment but are still enrolled in school. 
+min= 0, max=77.8 Mean(7.16) is larger than median(3.25). Becareful of outliers. 1485 values missing.
+
+### 35) X..Non.Grad.Completers
+
+```{r}
+colnames(pruned_ma_schools)[35] 
+favstats(~X..Non.Grad.Completers, data=pruned_ma_schools)
+```
+
+Percentage of NonGradCompleters:
+Non-Grad Completer includes 1) students who earned a certificate of attainment, 2) students who met local graduation requirements but the district does not offer certificates of attainment, and 3) students with special needs who reached the maximum age (22) but did not graduate. (information above is from http://profiles.doe.mass.edu/help/data.aspx?section=students )
+min= 0, max=30.8 Mean(1.25) is close to median(0).  1485 values missing.
+
+### 36) X..GED
+
+```{r}
+colnames(pruned_ma_schools)[36] 
+favstats(~X..GED, data=pruned_ma_schools)
+```
+
+Percentage of students who have earned GED (might have dropped out)
+min= 0, max=19 Mean(1.26) is close to median (0).  1485 values missing.
+
+### 37) X..Dropped.Out
+
+```{r}
+colnames(pruned_ma_schools)[37] 
+favstats(~X..Dropped.Out, data=pruned_ma_schools)
+```
+
+Percentage of students who dropped out from the school
+min= 0, max=71.4(this is high). Mean(7) is larger than median (2.9). Becareful of outliers.  1485 values missing.
+
+### 39) X..Permanently.Excluded
+
+```{r}
+colnames(pruned_ma_schools)[38] 
+favstats(~X..Permanently.Excluded, data=pruned_ma_schools)
+```
+
+Percentage of students who are excluded during a school year in each school. 
+(An exclusion is defined as the removal of a student for disciplinary purposes permanently, indefinitely or for more than ten consecutive school days.) <--the information is fromhttp://profiles.doe.mass.edu/help/data.aspx?section=students
+min= 0, max=1.9. Mean(0.04202128) is very close to median (0).   1485 values missing.
+
+### 39) X..Attending.College
+
+```{r}
+colnames(pruned_ma_schools)[39] 
+favstats(~X..Attending.College, data=pruned_ma_schools)
+```
+
+Percentage of students who extended college within 16 months after graduating from high school
+min= 10.5, max=100. Mean(74.5) is not much larger than median (68.7). 1517 values missing.
+
+### 40) MCAS_10thGrade_English_A..
+
+```{r}
+colnames(pruned_ma_schools)[40] 
+favstats(~MCAS_10thGrade_English_A.., data=pruned_ma_schools)
+```
+
+Number of students who got "advanced" for English.
+min= 0, max=441. Mean(91) is larger than median (65). Becareful of outliers. 1508 values missing.
+
+###NOTE:
+In the process of putting together the data appendix, we had several merge issues with GitHub. We split up the descriptions of the variables, and as it turns out we were looking at slightly different version of the data set. The descriptions below look at the following modification to `pruned_ma_schools`
+
+```{r}
+##get rid of schools without tenth grade 
+#subset(pruned_ma_schools,
+#       !is.na(pruned_ma_schools$MCAS_10thGrade_Math_A..))
+```
+
+This should get rid of any schools that do not have 10th grade. This means that in all of the following variables, the R output from `favstats` does not match the description. In the coming days we will be looking at how to resolve our merge errors and find consistency in our variable descriptions and our data set.
+
+### 40) MCAS_10thGrade_English_A..
+
+```{r}
+favstats(~MCAS_10thGrade_English_A.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_A..` : an `int` of Advanced scores in English. The minimum number of Advanced scores is 0, maximum is 441. The mean is 91.61, which is somewhat far from the median of 65. There are no missing values.
+
+### 41) MCAS_10thGrade_English_CPI
+
+```{r}
+favstats(~MCAS_10thGrade_English_CPI, data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_CPI` : the `num` measure of Composite Performance Index for English. The minimum index measure is 60, maximum is 100. The mean is 96.79 is fairly close to the median of 98.1. There are no missing values. 
+
+### 42) MCAS_10thGrade_Math_P..
+
+```{r}
+favstats(~MCAS_10thGrade_Math_P.. , data = pruned_ma_schools)
+```
+
+42. `MCAS_10thGrade_Math_P..` : an `int` of Proficient scores in Math. The minimum is 1 Proficient score, maximum of 245. The mean is 45.38, which is reasonably close to the median of 37. There are no missing values.
+
+### 43) MCAS_10thGrade_English_Incl..in.SGP...
+
+```{r}
+favstats(~MCAS_10thGrade_English_Incl..in.SGP..., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_Incl..in.SGP...` : an `int` of the students included in the Student Growth Percentile in English. The minimum is 2 students included, maximum of 757. The median and mean likely don't hold much weight in this context, but they are reasonably close. There is 1 missing value.
+
+### 44) MCAS_10thGrade_English_NI..
+
+```{r}
+favstats(~MCAS_10thGrade_English_NI.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_NI..` : an `int` of Needs Improvement scores in English. The minimum is 0 scores, maximum of 97 scores. The median (5) is fairly close to the mean (9.988). No missing values.
+
+### 45) MCAS_10thGrade_English_P..
+
+```{r}
+favstats(~MCAS_10thGrade_English_P.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_P..` : an `int` of Proficient scores in English.There is a minimum of 2 scores, maximum of 480. The median (67) and mean(84.22) are close in the context of the range of the variable No missing values.
+
+### 46) MCAS_10thGrade_English_P.A..
+
+```{r}
+favstats(~MCAS_10thGrade_English_P.A.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_P.A..` : an `int` of Proficient or Advanced scores in English. The minimum is 2 scores, maximum of 813. The median (149) and mean (175.83) are close in the context of the range of the variable. No missing values. 
+
+### 47) MCAS_10thGrade_English_SGP
+
+```{r}
+favstats(~MCAS_10thGrade_English_SGP, data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_SGP` : a `num` measure of Student Growth Percentile in English. The minimum is 25.5, maximum of 88. The median and mean are very close. There are 88 missing values.
+
+### 48) MCAS_10thGrade_English_Stud..Incl...
+
+```{r}
+favstats(~MCAS_10thGrade_English_Stud..Incl..., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_Stud..Incl...` : an `int` of the number of students included in the measure of SGP. The minimum is 10, maximum of 925. The median (162) and mean (189.8) are somewhat close, but the standard deviation (133.25) is surprisingly large. There are no missing values.
+
+### 49) MCAS_10thGrade_English_W.F..
+
+```{r}
+favstats(~MCAS_10thGrade_English_W.F.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_English_W.F..` : an `int` of Warning/Failing scores in English. The minimum is 0, maximum of 43. The median (2) and mean (4) are very close. No missing values.
+
+### 50) MCAS_10thGrade_Math_A..
+
+```{r}
+favstats(~MCAS_10thGrade_Math_A.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_A..` : an `int` of Advanced scores in Math. The minimum is 0, maximum of 492. The mean (105) and median (81) are somewhat far, so it may be worth looking into if there are any outliers. No missing values.
+
+### 51) MCAS_10thGrade_Math_CPI
+
+```{r}
+favstats(~MCAS_10thGrade_Math_CPI, data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_CPI` : a `num` measure of Composite Performance Index for Math. The minimum is 30, maximum is 100. The median (92.2) and mean (89.56) are close. No missing values.
+
+### 52) MCAS_10thGrade_Math_Incl..in.SGP...
+
+```{r}
+favstats(~MCAS_10thGrade_Math_Incl..in.SGP..., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_Incl..in.SGP...` : an `int` of the students included in the Student Growth Percentile in Math.The minimum is 1, maximum of 761 students. The median (148.5) and mean (167.37) are pretty close. 1 missing value.
+
+### 53) MCAS_10thGrade_Math_NI..
+
+```{r}
+favstats(~MCAS_10thGrade_Math_NI.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_NI..` : an `int` of Needs Improvement scores in Math. The minimum is 0, maximum of 221. The median (17) and mean (26.7) are fairly close. No missing values.
+
+### 54) MCAS_10thGrade_Math_P.A..
+
+```{r}
+favstats(~MCAS_10thGrade_Math_P.A.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_P.A..` : an `int` of Proficient or Advanced scores in Math. The minimum is 2 scores, maximum of 587 scores. The median (126) and mean (151) are moderately close, but the standard deviation is surprisingly large and should be looked at more closely. No missing values.
+
+### 55) MCAS_10thGrade_Math_SGP
+
+```{r}
+favstats(~MCAS_10thGrade_Math_SGP, data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_SGP`: a `num` measure of Student Growth Percentile in English. The minimum percentile is 16, the maximum is 89.5. The median (51) and mean (50.57) are very close. There are 18 missing values.
+
+### 56) MCAS_10thGrade_Math_Stud..Incl...
+
+```{r}
+favstats(~MCAS_10thGrade_Math_Stud..Incl..., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_Stud..Incl...` : an `int` of the number of students included in the measure of SGP. The minimum is 10, maximum of 925. The median (161) and mean (189.5) are somewhat far apart, and so should be looked at more closely. No missing values.
+
+### 57) MCAS_10thGrade_Math_W.F..
+
+```{r}
+favstats(~MCAS_10thGrade_Math_W.F.., data = pruned_ma_schools)
+```
+
+`MCAS_10thGrade_Math_W.F..` : an `int` of Warning/Failing scores in Math. The minimum is 0 scores, maximum of 136 scores. The median (6) and mean (11.8) are fairly close. The standard deviation is larger than the mean, however, and should be analyzed. No missing values.
+
+### 58) X..MCAS_10thGrade_English_A
+
+```{r}
+favstats(~X..MCAS_10thGrade_English_A, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_English_A` : an `int` percent of Advanced scores in English. The minimum is 0 scores, maximum of 90 scores. The median (45) and mean (44.9) are very close. No missing values.
+
+### 59) X..MCAS_10thGrade_English_NI
+
+```{r}
+favstats(~X..MCAS_10thGrade_English_NI, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_English_NI` : an `int` percent of Needs Improvement scores in English. The minimum is 0, maximum of 60. The median (4) and mean (6.13) are fairly close. No missing values. 
+
+### 60) X..MCAS_10thGrade_English_P
+
+```{r}
+favstats(~X..MCAS_10thGrade_English_P, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_English_P` : an `int` percent of Proficient scores in English. The minimum is 9 percent, maximum is 85 percent. The median (46) and mean (46.5) are very close. No missing values.
+
+### 61) X..MCAS_10thGrade_English_P.A
+
+```{r}
+favstats(~X..MCAS_10thGrade_English_P.A, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_English_P.A` : an `int` percent of Proficient or Advanced scores in English. The minimum percent is 13, maximum is 100. The median (95) and mean (91) are close. No missing values.
+
+### 62) X..MCAS_10thGrade_English_W.F
+
+```{r}
+favstats(~X..MCAS_10thGrade_English_W.F, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_English_W.F` : an `int` percent of Warning/Failing scores in English. The minimum is 0 percent, maximum is 44 percent. The median (1) and mean (2.38) are very close. No missing values.
+
+### 63) X..MCAS_10thGrade_Math_A
+
+```{r}
+favstats(~X..MCAS_10thGrade_Math_A, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_Math_A` : an `int` percent of Advanced scores in Math. The minimum is 0 percent, maximum is 97. The median (53) and mean (52.23) are very close. No missing values.
+
+### 64) X..MCAS_10thGrade_Math_NI
+
+```{r}
+favstats(~X..MCAS_10thGrade_Math_NI, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_Math_NI` : an `int` percent of Needs Improvement scores in Math. The minimum is 0, maximum is 65. The median (14) and mean (15.55) are very close. No missing values.
+
+### 65) X..MCAS_10thGrade_Math_P
+
+```{r}
+favstats(~X..MCAS_10thGrade_Math_P, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_Math_P` : an `int` percent of Proficient scores in Math. The minimum is 3 percent, maximum of 55 percent. The median (25) and mean (25.13) are very close. No missing values.
+
+### 66) X..MCAS_10thGrade_Math_P.A
+
+```{r}
+favstats(~X..MCAS_10thGrade_Math_P.A, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_Math_P.A` : an `int` percent of Proficient or Advanced scores in Math. The minimum is 10 percent, maximum is 100 percent. The median (82) and mean (77) are far in terms of the other percentage variables like this, so should be looked at. No missing values. 
+
+### 67) X..MCAS_10thGrade_Math_W.F
+
+```{r}
+favstats(~X..MCAS_10thGrade_Math_W.F, data = pruned_ma_schools)
+```
+
+`X..MCAS_10thGrade_Math_W.F` : an `int` percent of Warning/Failing scores in Math. The minimum is 0 percent, the maximum is 90 percent. The median (4) and mean (7.1) are fairly close. No missing values.
+
+
+
+
 #Key Next Steps
-1. Eliminate the variables that we know off-hand are not useful in our analysis. 
-2. Test for collinearity between variables that contain related information (for example, we will likely not include both Salary Totals and Average Salary, which both pertain to the salary of teachers).
-3. Create a "Percent Proficient" variable to be used as our response variable out of the categories provided. 
-4. Rename some of the variables so they make more sense. We should also consider re-ordering them.
+1. Fix merge errors and consolidate to a common data set; resolve any and all issues this has caused. 
+2. Eliminate the variables that we know off-hand are not useful in our analysis. We already did some of this, but we can probably narrow it down further. 
+3. Test for collinearity between variables that contain related information (for example, we will likely not include both Salary Totals and Average Salary, which both pertain to the salary of teachers).
+4. Create a "Percent Proficient" variable to be used as our response variable out of the categories provided. 
+5. Rename some of the variables so they make more sense. We should also consider re-ordering them.
+6. Get assistance with managing GitHub.
