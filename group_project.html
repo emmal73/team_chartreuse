@@ -127,186 +127,410 @@ $(document).ready(function () {
 <h2>Importing data</h2>
 <pre class="r"><code>ma_schools&lt;-read.csv(&quot;ma_schools.csv&quot;)</code></pre>
 <pre class="r"><code>pruned_ma_schools &lt;- ma_schools %&gt;%
-  select(X10_Enrollment, TOTAL_Enrollment, First.Language.Not.English, X..English.Language.Learner, English.Language.Learner, X..English.Language.Learner, Students.With.Disabilities, X..Students.With.Disabilities, High.Needs, X..High.Needs, Economically.Disadvantaged, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College, MCAS_10thGrade_English_A.., MCAS_10thGrade_English_CPI, MCAS_10thGrade_Math_P.., MCAS_10thGrade_English_Incl..in.SGP..., MCAS_10thGrade_English_NI.., MCAS_10thGrade_English_P.., MCAS_10thGrade_English_P.A.., MCAS_10thGrade_English_SGP, MCAS_10thGrade_English_Stud..Incl..., MCAS_10thGrade_English_W.F.., MCAS_10thGrade_Math_A.., MCAS_10thGrade_Math_CPI, MCAS_10thGrade_Math_Incl..in.SGP..., MCAS_10thGrade_Math_NI.., MCAS_10thGrade_Math_P.., MCAS_10thGrade_Math_P.A.., MCAS_10thGrade_Math_SGP, MCAS_10thGrade_Math_Stud..Incl..., MCAS_10thGrade_Math_W.F.., X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)
-##get rid of schools without tenth grade 
-pruned_ma_schools &lt;- subset(pruned_ma_schools,
-       !is.na(pruned_ma_schools$MCAS_10thGrade_Math_A..))</code></pre>
+  select(X10_Enrollment, TOTAL_Enrollment, First.Language.Not.English, X..English.Language.Learner, English.Language.Learner, X..English.Language.Learner, Students.With.Disabilities, X..Students.With.Disabilities, High.Needs, X..High.Needs, Economically.Disadvantaged, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College, MCAS_10thGrade_English_A.., MCAS_10thGrade_English_CPI, MCAS_10thGrade_Math_P.., MCAS_10thGrade_English_Incl..in.SGP..., MCAS_10thGrade_English_NI.., MCAS_10thGrade_English_P.., MCAS_10thGrade_English_P.A.., MCAS_10thGrade_English_SGP, MCAS_10thGrade_English_Stud..Incl..., MCAS_10thGrade_English_W.F.., MCAS_10thGrade_Math_A.., MCAS_10thGrade_Math_CPI, MCAS_10thGrade_Math_Incl..in.SGP..., MCAS_10thGrade_Math_NI.., MCAS_10thGrade_Math_P.., MCAS_10thGrade_Math_P.A.., MCAS_10thGrade_Math_SGP, MCAS_10thGrade_Math_Stud..Incl..., MCAS_10thGrade_Math_W.F.., X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)</code></pre>
 <pre class="r"><code>str(pruned_ma_schools, give.attr = FALSE)</code></pre>
-<pre><code>## 'data.frame':    351 obs. of  67 variables:
-##  $ X10_Enrollment                            : int  109 309 138 459 350 172 401 197 49 372 ...
-##  $ TOTAL_Enrollment                          : int  452 1222 594 1806 1290 744 1671 795 319 1866 ...
-##  $ First.Language.Not.English                : int  24 56 17 172 160 84 170 45 23 203 ...
-##  $ X..English.Language.Learner               : num  2.4 1.3 0.5 0.8 0.9 1.7 2.3 2.1 2.2 6.2 ...
-##  $ English.Language.Learner                  : int  11 16 3 14 12 13 38 17 7 116 ...
-##  $ Students.With.Disabilities                : int  44 172 101 290 143 98 238 76 52 227 ...
-##  $ X..Students.With.Disabilities             : num  9.7 14.1 17 16.1 11.1 13.2 14.2 9.6 16.3 12.2 ...
-##  $ High.Needs                                : int  130 391 154 377 267 170 593 189 111 680 ...
-##  $ X..High.Needs                             : num  28.8 32 25.9 20.9 20.7 22.8 35.5 23.8 34.8 36.4 ...
-##  $ Economically.Disadvantaged                : int  97 277 87 113 133 77 428 121 76 475 ...
-##  $ X..Economically.Disadvantaged             : num  21.5 22.7 14.6 6.3 10.3 10.3 25.6 15.2 23.8 25.5 ...
-##  $ X..African.American                       : num  2.2 1.2 1.3 1.9 4.1 2 5.5 2.1 37.3 8.4 ...
-##  $ X..Asian                                  : num  1.5 2.2 1.2 14.5 10.7 9 4.1 4.3 5.6 2.8 ...
-##  $ X..Hispanic                               : num  9.1 5.8 4.2 5 5.7 9.4 12.5 6.4 4.7 11.5 ...
-##  $ X..White                                  : num  85.8 88.8 90.7 76.3 75.6 77.2 73.6 84 48.3 72.2 ...
-##  $ X..Native.American                        : num  0.2 0 0 0.1 0 0.3 0.3 0.4 0.6 0.9 ...
-##  $ X..Native.Hawaiian..Pacific.Islander      : num  0.2 0.1 0 0 0.2 0 0.2 0 0 0.4 ...
-##  $ X..Multi.Race..Non.Hispanic               : num  0.9 1.9 2.5 2.2 3.7 2.2 3.8 2.8 3.4 3.7 ...
-##  $ X..Males                                  : num  45.6 52 53.5 48.9 49.1 48.8 54.2 48.1 48.3 48.7 ...
-##  $ X..Females                                : num  54.4 48 46.5 51.1 50.9 51.2 45.8 51.9 51.4 51.3 ...
-##  $ Total...of.Classes                        : int  204 590 380 1160 682 431 930 561 218 700 ...
-##  $ Average.Class.Size                        : num  15.8 16.8 16.7 14.7 14.3 14.6 18.1 17.3 13.3 15.3 ...
-##  $ Number.of.Students                        : int  451 1242 621 1799 1255 746 1724 776 320 1837 ...
-##  $ Salary.Totals                             : int  9489496 20849537 12158388 37560123 23917577 14049291 30332791 12040430 4367245 29148135 ...
-##  $ Average.Salary                            : int  74662 64769 77147 81211 66493 76355 76386 69481 67547 78757 ...
-##  $ FTE.Count                                 : int  127 322 158 463 360 184 397 173 65 370 ...
-##  $ In.District.Expenditures                  : num  23365711 53871628 29541450 90103626 64938117 ...
-##  $ Total.In.district.FTEs                    : num  1939 3977 2272 6128 5272 ...
-##  $ Average.In.District.Expenditures.per.Pupil: num  12050 13546 13001 14703 12317 ...
-##  $ Total.Expenditures                        : num  27229101 59044279 33668081 97309356 72601544 ...
-##  $ Total.Pupil.FTEs                          : num  2052 4111 2445 6237 5425 ...
-##  $ Average.Expenditures.per.Pupil            : num  13271 14363 13772 15602 13383 ...
-##  $ X..Graduated                              : num  94.7 94.2 93.9 95.7 98.1 95.1 91 96.9 83.3 84.6 ...
-##  $ X..Still.in.School                        : num  0.9 1.8 4.3 3.4 0.3 0.5 3.4 1.3 8.3 5 ...
-##  $ X..Non.Grad.Completers                    : num  0 0 0 0 0.3 1.6 1 0.6 2.1 2.3 ...
-##  $ X..GED                                    : num  0.9 0.3 0.6 0.5 0 1.6 0.5 0.6 0 0.5 ...
-##  $ X..Dropped.Out                            : num  3.5 3.7 1.2 0.5 1.3 1.1 4.1 0.6 6.3 7.6 ...
-##  $ X..Permanently.Excluded                   : num  0 0 0 0 0 0 0 0 0 0 ...
-##  $ X..Attending.College                      : num  75.8 81.6 72.6 89.3 85 87.7 74.3 79.1 87.8 75.5 ...
-##  $ MCAS_10thGrade_English_A..                : int  60 128 70 272 207 118 213 75 23 199 ...
-##  $ MCAS_10thGrade_English_CPI                : num  98.8 98.3 95.6 99.5 99.1 99.9 97.8 97.5 98.3 98.1 ...
-##  $ MCAS_10thGrade_Math_P..                   : int  31 83 28 73 55 34 101 56 9 85 ...
-##  $ MCAS_10thGrade_English_Incl..in.SGP...    : int  111 263 133 310 264 164 370 161 35 296 ...
-##  $ MCAS_10thGrade_English_NI..               : int  2 9 6 4 3 1 24 7 2 11 ...
-##  $ MCAS_10thGrade_English_P..                : int  57 145 67 130 82 52 158 82 19 129 ...
-##  $ MCAS_10thGrade_English_P.A..              : int  117 273 137 402 289 170 371 157 42 328 ...
-##  $ MCAS_10thGrade_English_SGP                : num  56 51 41 42 43.5 67 53 42 71 58 ...
-##  $ MCAS_10thGrade_English_Stud..Incl...      : int  124 287 149 408 294 171 403 167 44 346 ...
-##  $ MCAS_10thGrade_English_W.F..              : int  5 5 6 2 2 0 8 3 0 7 ...
-##  $ MCAS_10thGrade_Math_A..                   : int  73 159 92 314 219 134 229 74 24 187 ...
-##  $ MCAS_10thGrade_Math_CPI                   : num  94.2 93 91 97.2 97.4 99.4 92.5 90.6 87.5 90.3 ...
-##  $ MCAS_10thGrade_Math_Incl..in.SGP...       : int  114 270 131 332 263 165 368 159 35 299 ...
-##  $ MCAS_10thGrade_Math_NI..                  : int  14 37 16 15 17 3 58 28 6 47 ...
-##  $ MCAS_10thGrade_Math_P.A..                 : int  104 242 120 387 274 168 330 130 33 272 ...
-##  $ MCAS_10thGrade_Math_SGP                   : num  52.5 45 56 54 49 77 37 27 56 51 ...
-##  $ MCAS_10thGrade_Math_Stud..Incl...         : int  125 292 147 409 294 171 404 165 44 343 ...
-##  $ MCAS_10thGrade_Math_W.F..                 : int  7 13 11 7 3 0 16 7 5 24 ...
-##  $ X..MCAS_10thGrade_English_A               : int  48 45 47 67 70 69 53 45 52 58 ...
-##  $ X..MCAS_10thGrade_English_NI              : int  2 3 4 1 1 1 6 4 5 3 ...
-##  $ X..MCAS_10thGrade_English_P               : int  46 51 45 32 28 30 39 49 43 37 ...
-##  $ X..MCAS_10thGrade_English_P.A             : int  94 95 92 99 98 99 92 94 95 95 ...
-##  $ X..MCAS_10thGrade_English_W.F             : int  4 2 4 0 1 0 2 2 0 2 ...
-##  $ X..MCAS_10thGrade_Math_A                  : int  58 54 63 77 74 78 57 45 55 55 ...
-##  $ X..MCAS_10thGrade_Math_NI                 : int  11 13 11 4 6 2 14 17 14 14 ...
-##  $ X..MCAS_10thGrade_Math_P                  : int  25 28 19 18 19 20 25 34 20 25 ...
-##  $ X..MCAS_10thGrade_Math_P.A                : int  83 83 82 95 93 98 82 79 75 79 ...
-##  $ X..MCAS_10thGrade_Math_W.F                : int  6 4 7 2 1 0 4 4 11 7 ...</code></pre>
-</div>
-<div id="x10_enrollment" class="section level2">
-<h2>1) X10_Enrollment</h2>
+<pre><code>## 'data.frame':    1861 obs. of  67 variables:
+##  $ X10_Enrollment                            : int  109 0 0 0 0 0 0 0 309 0 ...
+##  $ TOTAL_Enrollment                          : int  452 580 203 328 353 538 417 151 1222 562 ...
+##  $ First.Language.Not.English                : int  24 61 26 18 21 3 4 2 56 35 ...
+##  $ X..English.Language.Learner               : num  2.4 7.2 3 1.8 2 0.4 0.5 0 1.3 1.1 ...
+##  $ English.Language.Learner                  : int  11 42 6 6 7 2 2 0 16 6 ...
+##  $ Students.With.Disabilities                : int  44 77 43 43 38 77 57 62 172 84 ...
+##  $ X..Students.With.Disabilities             : num  9.7 13.3 21.2 13.1 10.8 14.3 13.7 41.1 14.1 14.9 ...
+##  $ High.Needs                                : int  130 215 69 101 108 191 122 78 391 194 ...
+##  $ X..High.Needs                             : num  28.8 37.1 34 30.8 30.6 35.5 29.3 51.7 32 34.5 ...
+##  $ Economically.Disadvantaged                : int  97 135 33 71 80 136 82 45 277 131 ...
+##  $ X..Economically.Disadvantaged             : num  21.5 23.3 16.3 21.6 22.7 25.3 19.7 29.8 22.7 23.3 ...
+##  $ X..African.American                       : num  2.2 1.9 3.9 2.4 2 0.7 0.7 4.6 1.2 1.4 ...
+##  $ X..Asian                                  : num  1.5 1.9 3 1.8 1.4 0.2 0.2 8.6 2.2 1.4 ...
+##  $ X..Hispanic                               : num  9.1 6.7 8.4 6.1 4.2 3.3 1 12.6 5.8 7.1 ...
+##  $ X..White                                  : num  85.8 88.4 84.7 89.3 92.1 92.8 97.4 71.5 88.8 87 ...
+##  $ X..Native.American                        : num  0.2 0.5 0 0 0 0.2 0 0 0 0 ...
+##  $ X..Native.Hawaiian..Pacific.Islander      : num  0.2 0.2 0 0 0 0 0 0 0.1 0 ...
+##  $ X..Multi.Race..Non.Hispanic               : num  0.9 0.3 0 0.3 0.3 2.8 0.7 2.6 1.9 3 ...
+##  $ X..Males                                  : num  45.6 50.2 54.2 53.4 50.7 53.2 50.8 57.6 52 47.9 ...
+##  $ X..Females                                : num  54.4 49.8 45.8 46.6 49.3 46.8 49.2 42.4 48 52.1 ...
+##  $ Total...of.Classes                        : int  204 325 112 218 121 237 309 16 590 847 ...
+##  $ Average.Class.Size                        : num  15.8 24.6 14.6 21.1 30.4 20.1 16.9 11.9 16.8 11.8 ...
+##  $ Number.of.Students                        : int  451 643 208 342 334 558 426 191 1242 607 ...
+##  $ Salary.Totals                             : int  9489496 9489496 9489496 9489496 9489496 4543438 4543438 20849537 20849537 20849537 ...
+##  $ Average.Salary                            : int  74662 74662 74662 74662 74662 64906 64906 64769 64769 64769 ...
+##  $ FTE.Count                                 : int  127 127 127 127 127 70 70 322 322 322 ...
+##  $ In.District.Expenditures                  : num  23365711 23365711 23365711 23365711 23365711 ...
+##  $ Total.In.district.FTEs                    : num  1939 1939 1939 1939 1939 ...
+##  $ Average.In.District.Expenditures.per.Pupil: num  12050 12050 12050 12050 12050 ...
+##  $ Total.Expenditures                        : num  27229101 27229101 27229101 27229101 27229101 ...
+##  $ Total.Pupil.FTEs                          : num  2052 2052 2052 2052 2052 ...
+##  $ Average.Expenditures.per.Pupil            : num  13271 13271 13271 13271 13271 ...
+##  $ X..Graduated                              : num  94.7 NA NA NA NA NA NA NA 94.2 NA ...
+##  $ X..Still.in.School                        : num  0.9 NA NA NA NA NA NA NA 1.8 NA ...
+##  $ X..Non.Grad.Completers                    : num  0 NA NA NA NA NA NA NA 0 NA ...
+##  $ X..GED                                    : num  0.9 NA NA NA NA NA NA NA 0.3 NA ...
+##  $ X..Dropped.Out                            : num  3.5 NA NA NA NA NA NA NA 3.7 NA ...
+##  $ X..Permanently.Excluded                   : num  0 NA NA NA NA NA NA NA 0 NA ...
+##  $ X..Attending.College                      : num  75.8 NA NA NA NA NA NA NA 81.6 NA ...
+##  $ MCAS_10thGrade_English_A..                : int  60 NA NA NA NA NA NA NA 128 NA ...
+##  $ MCAS_10thGrade_English_CPI                : num  98.8 NA NA NA NA NA NA NA 98.3 NA ...
+##  $ MCAS_10thGrade_Math_P..                   : int  31 NA NA NA NA NA NA NA 83 NA ...
+##  $ MCAS_10thGrade_English_Incl..in.SGP...    : int  111 NA NA NA NA NA NA NA 263 NA ...
+##  $ MCAS_10thGrade_English_NI..               : int  2 NA NA NA NA NA NA NA 9 NA ...
+##  $ MCAS_10thGrade_English_P..                : int  57 NA NA NA NA NA NA NA 145 NA ...
+##  $ MCAS_10thGrade_English_P.A..              : int  117 NA NA NA NA NA NA NA 273 NA ...
+##  $ MCAS_10thGrade_English_SGP                : num  56 NA NA NA NA NA NA NA 51 NA ...
+##  $ MCAS_10thGrade_English_Stud..Incl...      : int  124 NA NA NA NA NA NA NA 287 NA ...
+##  $ MCAS_10thGrade_English_W.F..              : int  5 NA NA NA NA NA NA NA 5 NA ...
+##  $ MCAS_10thGrade_Math_A..                   : int  73 NA NA NA NA NA NA NA 159 NA ...
+##  $ MCAS_10thGrade_Math_CPI                   : num  94.2 NA NA NA NA NA NA NA 93 NA ...
+##  $ MCAS_10thGrade_Math_Incl..in.SGP...       : int  114 NA NA NA NA NA NA NA 270 NA ...
+##  $ MCAS_10thGrade_Math_NI..                  : int  14 NA NA NA NA NA NA NA 37 NA ...
+##  $ MCAS_10thGrade_Math_P.A..                 : int  104 NA NA NA NA NA NA NA 242 NA ...
+##  $ MCAS_10thGrade_Math_SGP                   : num  52.5 NA NA NA NA NA NA NA 45 NA ...
+##  $ MCAS_10thGrade_Math_Stud..Incl...         : int  125 NA NA NA NA NA NA NA 292 NA ...
+##  $ MCAS_10thGrade_Math_W.F..                 : int  7 NA NA NA NA NA NA NA 13 NA ...
+##  $ X..MCAS_10thGrade_English_A               : int  48 NA NA NA NA NA NA NA 45 NA ...
+##  $ X..MCAS_10thGrade_English_NI              : int  2 NA NA NA NA NA NA NA 3 NA ...
+##  $ X..MCAS_10thGrade_English_P               : int  46 NA NA NA NA NA NA NA 51 NA ...
+##  $ X..MCAS_10thGrade_English_P.A             : int  94 NA NA NA NA NA NA NA 95 NA ...
+##  $ X..MCAS_10thGrade_English_W.F             : int  4 NA NA NA NA NA NA NA 2 NA ...
+##  $ X..MCAS_10thGrade_Math_A                  : int  58 NA NA NA NA NA NA NA 54 NA ...
+##  $ X..MCAS_10thGrade_Math_NI                 : int  11 NA NA NA NA NA NA NA 13 NA ...
+##  $ X..MCAS_10thGrade_Math_P                  : int  25 NA NA NA NA NA NA NA 28 NA ...
+##  $ X..MCAS_10thGrade_Math_P.A                : int  83 NA NA NA NA NA NA NA 83 NA ...
+##  $ X..MCAS_10thGrade_Math_W.F                : int  6 NA NA NA NA NA NA NA 4 NA ...</code></pre>
+<div id="x10_enrollment" class="section level3">
+<h3>1) X10_Enrollment</h3>
 <pre class="r"><code>favstats(~X10_Enrollment, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median    Q3  max     mean       sd   n missing
-##    7 95    171 292.5 1048 203.4644 142.3679 351       0</code></pre>
-<p>This variable records the number of 10th graders enrolled in a school. Both minimum and median are 0, with a max of 1048. The mean is 39.34498, much higher than the median, suggesting a rightward skew in the data, which makes sense when many observations have a value of 0. ## 2) TOTAL_Enrollment</p>
+<pre><code>##  min Q1 median Q3  max     mean       sd    n missing
+##    0  0      0  0 1048 39.34498 102.2343 1861       0</code></pre>
+<p>This variable records the number of 10th graders enrolled in a school. Both minimum and median are 0, with a max of 1048. The mean is 39.34498, much higher than the median, suggesting a rightward skew in the data, which makes sense when many observations have a value of 0.</p>
+</div>
+<div id="total_enrollment" class="section level3">
+<h3>2) TOTAL_Enrollment</h3>
 <pre class="r"><code>favstats(~TOTAL_Enrollment, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min  Q1 median     Q3  max     mean       sd   n missing
-##   93 480    748 1208.5 4264 887.9316 544.5031 351       0</code></pre>
-<p>This variable records the total enrollment in a school. The minimum is 0, which seems a little strange, and may present a venue for further investigation. The median is 436, and max is 4264, showing a lot of variety in institution size by the standards of my existing domain knowledge. ## 3) First.Language.Not.English</p>
+<pre><code>##  min  Q1 median  Q3  max     mean       sd    n missing
+##    0 294    436 618 4264 512.4922 366.6322 1861       0</code></pre>
+<p>This variable records the total enrollment in a school. The minimum is 0, which seems a little strange, and may present a venue for further investigation. The median is 436, and max is 4264, showing a lot of variety in institution size by the standards of my existing domain knowledge.</p>
+</div>
+<div id="first.language.not.english" class="section level3">
+<h3>3) First.Language.Not.English</h3>
 <pre class="r"><code>favstats(~First.Language.Not.English, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median    Q3  max    mean       sd   n missing
-##    0 14     56 181.5 1973 162.094 252.4174 351       0</code></pre>
-<p>This variable enumerates the number of students in a school whose first language is not English. The range is wide, with a minimum of 0 and maximum of 2759 students. The distribution seems highly right skewed because while the median value is 42, our mean is 103.7643 students. ## 4) X..English.Language.Learner</p>
+<pre><code>##  min Q1 median     Q3  max     mean       sd    n missing
+##    0 11     42 126.75 2759 103.7643 167.2472 1850      11</code></pre>
+<p>This variable enumerates the number of students in a school whose first language is not English. The range is wide, with a minimum of 0 and maximum of 2759 students. The distribution seems highly right skewed because while the median value is 42, our mean is 103.7643 students.</p>
+</div>
+<div id="x..english.language.learner" class="section level3">
+<h3>4) X..English.Language.Learner</h3>
 <pre class="r"><code>favstats(~X..English.Language.Learner, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min  Q1 median   Q3  max     mean       sd   n missing
-##    0 0.5    1.5 7.15 79.6 6.336752 10.76806 351       0</code></pre>
-<p>This variable measures the percentage of students at a school who are learning English. The minimum is 0, and maximum is 82.9. We might want to look out for outliers considering how much greater the max is than either the median (3.6) or mean (9.548432). ## 5) English.Language.Learner</p>
+<pre><code>##  min  Q1 median   Q3  max     mean      sd    n missing
+##    0 0.9    3.6 13.2 82.9 9.548432 13.1631 1850      11</code></pre>
+<p>This variable measures the percentage of students at a school who are learning English. The minimum is 0, and maximum is 82.9. We might want to look out for outliers considering how much greater the max is than either the median (3.6) or mean (9.548432). ### 5) English.Language.Learner</p>
 <pre class="r"><code>favstats(~English.Language.Learner, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median   Q3 max     mean       sd   n missing
-##    0  4     12 54.5 761 54.04843 101.2951 351       0</code></pre>
-<p>This variable measures the number of students in a school who are learning English. The minimum is 0, and maximum is 1020. It appears this variable also has an upward skew, considering how much greater the mean is (48.75892) than the median (16). ## 6) Students.With.Disabilities</p>
+<pre><code>##  min Q1 median    Q3  max     mean       sd    n missing
+##    0  4     16 57.75 1020 48.75892 80.86767 1850      11</code></pre>
+<p>This variable measures the number of students in a school who are learning English. The minimum is 0, and maximum is 1020. It appears this variable also has an upward skew, considering how much greater the mean is (48.75892) than the median (16).</p>
+</div>
+<div id="students.with.disabilities" class="section level3">
+<h3>6) Students.With.Disabilities</h3>
 <pre class="r"><code>favstats(~Students.With.Disabilities, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
-##    0 74    120 190 522 140.7322 88.69909 351       0</code></pre>
-<p>This varible measures the number of students with mental and/or physical disabilities at the school. Values range from 0 to 589 students. The mean number of disabled students is 84.88757. ## 7) X..Students.With.Disabilities</p>
+<pre><code>##  min Q1 median  Q3 max     mean       sd    n missing
+##    0 45     70 108 589 84.88757 61.54745 1850      11</code></pre>
+<p>This varible measures the number of students with mental and/or physical disabilities at the school. Values range from 0 to 589 students. The mean number of disabled students is 84.88757.</p>
+</div>
+<div id="x..students.with.disabilities" class="section level3">
+<h3>7) X..Students.With.Disabilities</h3>
 <pre class="r"><code>favstats(~X..Students.With.Disabilities, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min    Q1 median   Q3 max    mean       sd   n missing
-##    0 12.35   15.5 19.3 100 17.3339 10.06532 351       0</code></pre>
-<p>This variable measures the percentage of students with mental and/or physical disabilities at the school. This ranges from 0 to 100%. Considering the much lower mean (18.22368) and median (16.1), we should definitely look out for outliers. I suspect there may be a few schools designated specifically for disabled students, based on the maximum percentage. ## 8) High.Needs</p>
+<pre><code>##  min   Q1 median Q3 max     mean      sd    n missing
+##    0 12.9   16.1 20 100 18.22368 11.4625 1850      11</code></pre>
+<p>This variable measures the percentage of students with mental and/or physical disabilities at the school. This ranges from 0 to 100%. Considering the much lower mean (18.22368) and median (16.1), we should definitely look out for outliers. I suspect there may be a few schools designated specifically for disabled students, based on the maximum percentage.</p>
+</div>
+<div id="high.needs" class="section level3">
+<h3>8) High.Needs</h3>
 <pre class="r"><code>favstats(~High.Needs, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min    Q1 median  Q3  max     mean       sd   n missing
-##   47 163.5    247 412 2646 351.4359 304.6551 351       0</code></pre>
-<p>This variable measures the number of students in a school who are designated as “high needs” learners, often meaning a learning disability. There seems to be an upward skew, since mean (230.2314) is much greater than median (169). ## 9) X..High.Needs</p>
+<pre><code>##  min  Q1 median     Q3  max     mean       sd    n missing
+##    0 103    169 290.75 2646 230.2314 207.5804 1850      11</code></pre>
+<p>This variable measures the number of students in a school who are designated as “high needs” learners, often meaning a learning disability. There seems to be an upward skew, since mean (230.2314) is much greater than median (169).</p>
+</div>
+<div id="x..high.needs" class="section level3">
+<h3>9) X..High.Needs</h3>
 <pre class="r"><code>favstats(~X..High.Needs, data=pruned_ma_schools)</code></pre>
-<pre><code>##   min    Q1 median   Q3 max     mean       sd   n missing
-##  11.7 23.55     36 55.1 100 41.76125 21.53602 351       0</code></pre>
-<p>This variable measures the percentage of students in a school who are designated as “high needs” learners, often meaning a learning disability. Like the previous variable pertaining to disability, this variable has a maximum of 100%, leading us to suspect outliers when taking into account the much lower mean (46.61622) and median (41.2) percentages. ## 10) Economically.Disadvantaged</p>
+<pre><code>##  min   Q1 median     Q3 max     mean       sd    n missing
+##    0 27.4   41.2 64.975 100 46.61622 22.96646 1850      11</code></pre>
+<p>This variable measures the percentage of students in a school who are designated as “high needs” learners, often meaning a learning disability. Like the previous variable pertaining to disability, this variable has a maximum of 100%, leading us to suspect outliers when taking into account the much lower mean (46.61622) and median (41.2) percentages.</p>
+</div>
+<div id="economically.disadvantaged" class="section level3">
+<h3>10) Economically.Disadvantaged</h3>
 <pre class="r"><code>favstats(~Economically.Disadvantaged, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median    Q3  max     mean       sd   n missing
-##   21 89.5    148 283.5 1997 235.3362 244.7676 351       0</code></pre>
-<p>This quantitative variable records the numbers of students who are economically disadvantaged. The minimum is 0 and maximum is 1997. However, the average is 155.927, which is far from the maximum. The variable makes sense, but we need to be careful with unusual values. 11 data points are missing. ## 11) X..Economically.Disadvantaged</p>
+<pre><code>##  min Q1 median  Q3  max    mean       sd    n missing
+##    0 48    102 205 1997 155.927 168.1307 1850      11</code></pre>
+<p>This quantitative variable records the numbers of students who are economically disadvantaged. The minimum is 0 and maximum is 1997. However, the average is 155.927, which is far from the maximum. The variable makes sense, but we need to be careful with unusual values. 11 data points are missing.</p>
+</div>
+<div id="x..economically.disadvantaged" class="section level3">
+<h3>11) X..Economically.Disadvantaged</h3>
 <pre class="r"><code>favstats(~X..Economically.Disadvantaged, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median    Q3  max     mean     sd   n missing
-##  3.1 12.7   23.6 40.65 83.3 28.55556 19.554 351       0</code></pre>
-<p>The variable records the percentage of students who are financially disadvantaged in each school. The minimum is 0 percent, and the max is 94.4 percent. The mean is 31.81665. The pattern of data in this variable corresponds with the pattern of data in the last one (the number of students who are economically disadvantaged)Still 11 data missing ## 12) X..African.American</p>
+<pre><code>##  min     Q1 median   Q3  max     mean       sd    n missing
+##    0 12.825   25.9 47.8 94.4 31.81665 22.40991 1850      11</code></pre>
+<p>The variable records the percentage of students who are financially disadvantaged in each school. The minimum is 0 percent, and the max is 94.4 percent. The mean is 31.81665. The pattern of data in this variable corresponds with the pattern of data in the last one (the number of students who are economically disadvantaged)Still 11 data missing</p>
+</div>
+<div id="x..african.american" class="section level3">
+<h3>12) X..African.American</h3>
 <pre class="r"><code>favstats(~X..African.American, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min  Q1 median    Q3  max     mean       sd   n missing
-##    0 1.5    3.3 10.95 80.5 10.59117 16.09623 351       0</code></pre>
-<p>The percentage of African American students in the school. Both minimum and maximum are within the range of 0 and 100 (0 and 86.9). The mean is much larger than median, so we need to be careful with outliers. Still 11 data missing ## 13) X..Asian</p>
+<pre><code>##  min  Q1 median  Q3  max     mean       sd    n missing
+##    0 1.4    3.3 8.7 86.9 8.699459 13.69828 1850      11</code></pre>
+<p>The percentage of African American students in the school. Both minimum and maximum are within the range of 0 and 100 (0 and 86.9). The mean is much larger than median, so we need to be careful with outliers. Still 11 data missing</p>
+</div>
+<div id="x..asian" class="section level3">
+<h3>13) X..Asian</h3>
 <pre class="r"><code>favstats(~X..Asian, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min  Q1 median   Q3  max     mean       sd   n missing
-##    0 1.2    2.3 5.55 58.4 4.838462 6.847596 351       0</code></pre>
-<p>Percentage of Asian in each school. min=0, max=73.7. Mean(6.05) is larger than median(2.6). Becareful with outliers. Still 11 data missing. ## 14) X..Hispanic</p>
+<pre><code>##  min  Q1 median  Q3  max     mean       sd    n missing
+##    0 1.2    2.6 6.9 73.7 6.050919 8.763984 1850      11</code></pre>
+<p>Percentage of Asian in each school. min=0, max=73.7. Mean(6.05) is larger than median(2.6). Becareful with outliers. Still 11 data missing. ### 14) X..Hispanic</p>
 <pre class="r"><code>favstats(~X..Hispanic, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median   Q3  max     mean      sd   n missing
-##  0.2 3.55    7.1 23.6 95.5 17.05755 20.7222 351       0</code></pre>
-<p>percentage of Hispanic students in each school min=0, max=98. Mean(18.99) is much larger than median(8.2). Need to becareful with outliers(school with very large amount of hispanice students). Still 11 values missing. ## 15) X..White</p>
+<pre><code>##  min Q1 median   Q3 max     mean       sd    n missing
+##    0  4    8.2 27.3  98 18.99665 22.57573 1850      11</code></pre>
+<p>percentage of Hispanic students in each school min=0, max=98. Mean(18.99) is much larger than median(8.2). Need to becareful with outliers(school with very large amount of hispanice students). Still 11 values missing.</p>
+</div>
+<div id="x..white" class="section level3">
+<h3>15) X..White</h3>
 <pre class="r"><code>favstats(~X..White, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min    Q1 median   Q3  max     mean       sd   n missing
-##  0.6 43.25   78.5 88.9 97.9 64.47037 30.97278 351       0</code></pre>
-<p>percentage of white students in each school min=0, max=86.6. Mean(62.32) is smaller than median(73.2). Need to becareful with outliers(school with very small amount of white students). Still 11 values missing. ## 16) X..Native.American</p>
+<pre><code>##  min Q1 median   Q3 max     mean       sd    n missing
+##    0 41   73.2 86.6 100 62.32649 29.56209 1850      11</code></pre>
+<p>percentage of white students in each school min=0, max=86.6. Mean(62.32) is smaller than median(73.2). Need to becareful with outliers(school with very small amount of white students). Still 11 values missing.</p>
+</div>
+<div id="x..native.american" class="section level3">
+<h3>16) X..Native.American</h3>
 <pre class="r"><code>favstats(~X..Native.American, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median  Q3 max      mean       sd   n missing
-##    0  0    0.1 0.3 5.1 0.2316239 0.399782 351       0</code></pre>
-<p>percentage of Native American students in each school min=0, max=8. Mean(0.2334595) is close to median(0). It seems like there are very few Native American population in MA. Still 11 values missing. ## 17) X..Native.Hawaiian..Pacific.Islander</p>
+<pre><code>##  min Q1 median  Q3 max      mean        sd    n missing
+##    0  0      0 0.3   8 0.2334595 0.5017325 1850      11</code></pre>
+<p>percentage of Native American students in each school min=0, max=8. Mean(0.2334595) is close to median(0). It seems like there are very few Native American population in MA. Still 11 values missing.</p>
+</div>
+<div id="x..native.hawaiian..pacific.islander" class="section level3">
+<h3>17) X..Native.Hawaiian..Pacific.Islander</h3>
 <pre class="r"><code>favstats(~X..Native.Hawaiian..Pacific.Islander, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median  Q3 max      mean        sd   n missing
-##    0  0      0 0.2 1.2 0.0974359 0.1609587 351       0</code></pre>
-<p>percentage of pacific islander students in each school min=0, max=6.1. Mean(0.098) is close to median(0). It seems like there are very few Native Haaiian Pacific Islander population in MA (which makes sense). Still 11 values missing. ## 18) X..Multi.Race..Non.Hispanic</p>
+<pre><code>##  min Q1 median  Q3 max  mean        sd    n missing
+##    0  0      0 0.1 6.1 0.098 0.2858125 1850      11</code></pre>
+<p>percentage of pacific islander students in each school min=0, max=6.1. Mean(0.098) is close to median(0). It seems like there are very few Native Haaiian Pacific Islander population in MA (which makes sense). Still 11 values missing.</p>
+</div>
+<div id="x..multi.race..non.hispanic" class="section level3">
+<h3>18) X..Multi.Race..Non.Hispanic</h3>
 <pre class="r"><code>favstats(~X..Multi.Race..Non.Hispanic, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median  Q3  max    mean       sd   n missing
-##    0 1.45    2.4 3.6 13.2 2.71396 1.753659 351       0</code></pre>
-<p>percentage of multi race (non hispanic) students in each school min=0, max=17.4. Mean(3.6) is close to median(3.2). Still 11 values missing. ## 19) X..Males</p>
+<pre><code>##  min  Q1 median    Q3  max     mean      sd    n missing
+##    0 1.9    3.2 4.775 17.4 3.596595 2.42083 1850      11</code></pre>
+<p>percentage of multi race (non hispanic) students in each school min=0, max=17.4. Mean(3.6) is close to median(3.2). Still 11 values missing.</p>
+</div>
+<div id="x..males" class="section level3">
+<h3>19) X..Males</h3>
 <pre class="r"><code>favstats(~X..Males, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min    Q1 median    Q3 max     mean       sd   n missing
-##   24 48.35   50.2 52.75  79 50.83191 5.539072 351       0</code></pre>
-<p>percentage of male students in each school min=24, max=100 (there is all boys high school in MA). Mean(51.89) is close to median(51.4). The center value measurements make sense.Still 11 values missing. ## 20) X..Females</p>
+<pre><code>##  min   Q1 median   Q3 max     mean       sd    n missing
+##   24 49.4   51.4 53.6 100 51.89941 5.121577 1850      11</code></pre>
+<p>percentage of male students in each school min=24, max=100 (there is all boys high school in MA). Mean(51.89) is close to median(51.4). The center value measurements make sense.Still 11 values missing.</p>
+</div>
+<div id="x..females" class="section level3">
+<h3>20) X..Females</h3>
 <pre class="r"><code>favstats(~X..Females, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min    Q1 median   Q3 max     mean       sd   n missing
-##   21 47.25   49.8 51.6  76 49.15271 5.526486 351       0</code></pre>
-<p>percentage of female students in each school min=0, max=76. Mean(48) is close to median(48.6). The center value measurements make sense.Still 11 values missing. ## 21) Total…of.Classes</p>
+<pre><code>##  min   Q1 median   Q3 max     mean       sd    n missing
+##    0 46.4   48.6 50.6  76 48.09514 5.122469 1850      11</code></pre>
+<p>percentage of female students in each school min=0, max=76. Mean(48) is close to median(48.6). The center value measurements make sense. Still 11 values missing.</p>
+</div>
+<div id="totalof.classes" class="section level3">
+<h3>21) Total…of.Classes</h3>
 <pre class="r"><code>favstats(~Total...of.Classes, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min     Q1 median     Q3  max     mean       sd   n missing
-##   43 270.75    419 614.25 2001 476.8161 284.6685 348       3</code></pre>
-<p>number of classes in each school min=1, max=2001. Its very unusual that a school can have 2001 classes. Mean(240) is larger than median(179). Becareful of outliers. 38 values missing. ## 22) Average.Class.Size</p>
+<pre><code>##  min    Q1 median    Q3  max     mean       sd    n missing
+##    1 100.5    179 317.5 2001 240.5326 207.6255 1823      38</code></pre>
+<p>number of classes in each school min=1, max=2001. Its very unusual that a school can have 2001 classes. Mean(240) is larger than median(179). Becareful of outliers. 3 values missing.</p>
+</div>
+<div id="average.class.size" class="section level3">
+<h3>22) Average.Class.Size</h3>
 <pre class="r"><code>favstats(~Average.Class.Size, data=pruned_ma_schools)</code></pre>
-<pre><code>##  min     Q1 median   Q3 max     mean       sd   n missing
-##  4.9 13.875   15.8 17.5  34 15.88075 3.157253 348       3</code></pre>
-<p>average class size in each school min=2, max=41. Mean(18.32) is very close to median(18.6). These numbers make sense. 38 values missing. ### 40) MCAS_10thGrade_English_A..</p>
+<pre><code>##  min   Q1 median   Q3  max     mean       sd    n missing
+##    2 16.3   18.6 20.8 41.1 18.32057 3.966979 1823      38</code></pre>
+<p>average class size in each school min=2, max=41. Mean(18.32) is very close to median(18.6). These numbers make sense. 3 values missing.</p>
+</div>
+<div id="salary.totals" class="section level3">
+<h3>24) Salary.Totals</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[24] </code></pre>
+<pre><code>## [1] &quot;Salary.Totals&quot;</code></pre>
+<pre class="r"><code>favstats(~Salary.Totals, data=pruned_ma_schools)</code></pre>
+<pre><code>##    min       Q1   median       Q3       max     mean       sd    n missing
+##  55340 12158388 22697411 48085708 383866184 56251775 93357883 1769      92</code></pre>
+<p>total salary for teachers in each school min=55340, max=383866184. Mean(56251775) is much larger than median(22697411). Becareful of very large outlier. The unit of this variable is dollars. 42 values missing.</p>
+</div>
+<div id="average.salary" class="section level3">
+<h3>25) Average.Salary</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[25] </code></pre>
+<pre><code>## [1] &quot;Average.Salary&quot;</code></pre>
+<pre class="r"><code>favstats(~Average.Salary, data=pruned_ma_schools)</code></pre>
+<pre><code>##    min    Q1 median    Q3    max     mean       sd    n missing
+##  34588 68572  73471 78256 100731 74036.64 7990.377 1769      92</code></pre>
+<p>Average.Salary for teachers in each school min=34588, max=100731. Mean(74036) is very close to median(73471). The unit of this variable is dollars. 42 values missing.</p>
+</div>
+<div id="fte.count" class="section level3">
+<h3>26) FTE.Count</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[26] </code></pre>
+<pre><code>## [1] &quot;FTE.Count&quot;</code></pre>
+<pre class="r"><code>favstats(~FTE.Count, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min  Q1 median  Q3  max    mean       sd    n missing
+##    2 166    308 627 4323 707.853 1065.807 1769      92</code></pre>
+<p>FTE.Count: Full-Time Equivalents (FTE) Average Membership: average enrollment across the school year, for pupils enrolled at local schools. min=2, max=4323. Mean(707) is the two times of median(308). The distribution might be skewed. 42 values missing.</p>
+</div>
+<div id="in.district.expenditures" class="section level3">
+<h3>27) In.District.Expenditures</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[27] </code></pre>
+<pre><code>## [1] &quot;In.District.Expenditures&quot;</code></pre>
+<pre class="r"><code>favstats(~FTE.Count, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min  Q1 median  Q3  max    mean       sd    n missing
+##    2 166    308 627 4323 707.853 1065.807 1769      92</code></pre>
+<p>In.District.Expenditures The unit for this variable is dollar.min=697550, max=1093104369. Mean(151809656) is much larger than median(52933309). The distribution might be skewed. 42 values missing.</p>
+</div>
+<div id="total.in.district.ftes" class="section level3">
+<h3>28) Total.In.district.FTEs</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[28] </code></pre>
+<pre><code>## [1] &quot;Total.In.district.FTEs&quot;</code></pre>
+<pre class="r"><code>favstats(~Total.In.district.FTEs, data=pruned_ma_schools)</code></pre>
+<pre><code>##   min      Q1 median     Q3     max     mean       sd    n missing
+##  38.4 2312.15 4205.3 7700.4 56858.8 9376.336 14015.73 1768      93</code></pre>
+<p>Total.In.district.FTEs: Average enrollment across the school year for students enrolled at local schools and those publicly-funded students enrolled at other districts, including charter schools, special education collaboratives, and private special education schools. (The information above comes from <a href="http://profiles.doe.mass.edu/help/data.aspx?section=finance" class="uri">http://profiles.doe.mass.edu/help/data.aspx?section=finance</a>) min=38.4, max=56858.8. Mean(9376.336) is much larger than median(4205.3). The distribution might be skewed.42 values missing</p>
+</div>
+<div id="average.in.district.expenditures.per.pupil" class="section level3">
+<h3>29)Average.In.District.Expenditures.per.Pupil</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[29] </code></pre>
+<pre><code>## [1] &quot;Average.In.District.Expenditures.per.Pupil&quot;</code></pre>
+<pre class="r"><code>favstats(~Average.In.District.Expenditures.per.Pupil, data=pruned_ma_schools)</code></pre>
+<pre><code>##      min       Q1   median       Q3      max     mean       sd    n
+##  9451.51 12785.25 13599.49 15478.08 38780.85 14573.86 2940.803 1768
+##  missing
+##       93</code></pre>
+<p>Average.In.District.Expenditures.per.Pupil: total expenditure divided by FTE average membership The unit for this variable is dollar.min= 9451.51, max=38780.85. Mean(14573.86) is not much larger than median(13599.49). Still 42 values missing.</p>
+</div>
+<div id="total-expenditures" class="section level3">
+<h3>30) Total Expenditures</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[30] </code></pre>
+<pre><code>## [1] &quot;Total.Expenditures&quot;</code></pre>
+<pre class="r"><code>favstats(~Total.Expenditures, data=pruned_ma_schools)</code></pre>
+<pre><code>##      min       Q1   median        Q3        max      mean        sd    n
+##  1132413 33532419 58637410 133544403 1269579527 173119800 309305716 1768
+##  missing
+##       93</code></pre>
+<p>Total.Expenditures (all kind of expenditure) The unit for this variable is dollar.min= 1132413, max=1269579527. Mean(173119800) is much larger than median(58637410). There might be outliers.Still 42 values missing.</p>
+</div>
+<div id="total.pupil.ftes" class="section level3">
+<h3>31) Total.Pupil.FTEs</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[31] </code></pre>
+<pre><code>## [1] &quot;Total.Pupil.FTEs&quot;</code></pre>
+<pre class="r"><code>favstats(~Total.Pupil.FTEs, data=pruned_ma_schools)</code></pre>
+<pre><code>##   min     Q1 median     Q3     max     mean       sd    n missing
+##  82.8 2442.9   4392 8378.9 65964.6 10466.07 16287.47 1768      93</code></pre>
+<p>Total.Pupil.FTEs: total number of students who have FTE membership in schools min= 82, max=65964.6. Mean(10466.07) is much larger than median(4392). There might be outliers.Still 42 values missing.</p>
+</div>
+<div id="average.expenditures.per.pupil" class="section level3">
+<h3>32) Average.Expenditures.per.Pupil</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[32] </code></pre>
+<pre><code>## [1] &quot;Average.Expenditures.per.Pupil&quot;</code></pre>
+<pre class="r"><code>favstats(~Average.Expenditures.per.Pupil, data=pruned_ma_schools)</code></pre>
+<pre><code>##       min      Q1   median       Q3      max     mean       sd    n
+##  10399.97 13339.7 14137.48 15900.29 30505.05 15038.25 2743.977 1768
+##  missing
+##       93</code></pre>
+<p>Average.Expenditures.per.Pupil The unit for this variable is dollar.min= 10399.97, max=30505.05 . Mean(15038.25) is close to median(14137.48). Still 42 values missing</p>
+</div>
+<div id="x..graduated" class="section level3">
+<h3>33) X..Graduated</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[33] </code></pre>
+<pre><code>## [1] &quot;X..Graduated&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Graduated, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min    Q1 median   Q3 max     mean      sd   n missing
+##    0 82.15  92.25 96.2 100 83.32739 21.4594 376    1485</code></pre>
+<p>Percentage of students graduated from the school min= 0, max=100 Mean(83) is close to median(82). 11 values missing.</p>
+</div>
+<div id="x..still.in.school" class="section level3">
+<h3>34) X..Still.in.School</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[34] </code></pre>
+<pre><code>## [1] &quot;X..Still.in.School&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Still.in.School, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min  Q1 median    Q3  max     mean       sd   n missing
+##    0 1.4   3.25 7.825 77.8 7.160638 10.68252 376    1485</code></pre>
+<p>Percentage of students who have earned a Certificate of Attainment but are still enrolled in school. min= 0, max=77.8 Mean(7.16) is larger than median(3.25). Becareful of outliers. 1485 values missing.</p>
+</div>
+<div id="x..non.grad.completers" class="section level3">
+<h3>35) X..Non.Grad.Completers</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[35] </code></pre>
+<pre><code>## [1] &quot;X..Non.Grad.Completers&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Non.Grad.Completers, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min Q1 median Q3  max    mean       sd   n missing
+##    0  0      0  1 30.8 1.25266 3.532756 376    1485</code></pre>
+<p>Percentage of NonGradCompleters: Non-Grad Completer includes 1) students who earned a certificate of attainment, 2) students who met local graduation requirements but the district does not offer certificates of attainment, and 3) students with special needs who reached the maximum age (22) but did not graduate. (information above is from <a href="http://profiles.doe.mass.edu/help/data.aspx?section=students" class="uri">http://profiles.doe.mass.edu/help/data.aspx?section=students</a> ) min= 0, max=30.8 Mean(1.25) is close to median(0). 1485 values missing.</p>
+</div>
+<div id="x..ged" class="section level3">
+<h3>36) X..GED</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[36] </code></pre>
+<pre><code>## [1] &quot;X..GED&quot;</code></pre>
+<pre class="r"><code>favstats(~X..GED, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min Q1 median  Q3 max    mean       sd   n missing
+##    0  0    0.5 1.3  19 1.12766 2.119165 376    1485</code></pre>
+<p>Percentage of students who have earned GED (might have dropped out) min= 0, max=19 Mean(1.26) is close to median (0). 1485 values missing.</p>
+</div>
+<div id="x..dropped.out" class="section level3">
+<h3>37) X..Dropped.Out</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[37] </code></pre>
+<pre><code>## [1] &quot;X..Dropped.Out&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Dropped.Out, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min Q1 median  Q3  max     mean       sd   n missing
+##    0  1    2.9 7.9 71.4 7.089362 11.24129 376    1485</code></pre>
+<p>Percentage of students who dropped out from the school min= 0, max=71.4(this is high). Mean(7) is larger than median (2.9). Becareful of outliers. 1485 values missing.</p>
+</div>
+<div id="x..permanently.excluded" class="section level3">
+<h3>39) X..Permanently.Excluded</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[38] </code></pre>
+<pre><code>## [1] &quot;X..Permanently.Excluded&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Permanently.Excluded, data=pruned_ma_schools)</code></pre>
+<pre><code>##  min Q1 median Q3 max       mean        sd   n missing
+##    0  0      0  0 1.9 0.04202128 0.2110044 376    1485</code></pre>
+<p>Percentage of students who are excluded during a school year in each school. (An exclusion is defined as the removal of a student for disciplinary purposes permanently, indefinitely or for more than ten consecutive school days.) &lt;–the information is fromhttp://profiles.doe.mass.edu/help/data.aspx?section=students min= 0, max=1.9. Mean(0.04202128) is very close to median (0). 1485 values missing.</p>
+</div>
+<div id="x..attending.college" class="section level3">
+<h3>39) X..Attending.College</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[39] </code></pre>
+<pre><code>## [1] &quot;X..Attending.College&quot;</code></pre>
+<pre class="r"><code>favstats(~X..Attending.College, data=pruned_ma_schools)</code></pre>
+<pre><code>##   min     Q1 median   Q3 max     mean       sd   n missing
+##  10.5 68.175   77.8 86.9 100 74.50581 16.18019 344    1517</code></pre>
+<p>Percentage of students who extended college within 16 months after graduating from high school min= 10.5, max=100. Mean(74.5) is not much larger than median (68.7). 1517 values missing.</p>
+</div>
+<div id="mcas_10thgrade_english_a.." class="section level3">
+<h3>40) MCAS_10thGrade_English_A..</h3>
+<pre class="r"><code>colnames(pruned_ma_schools)[40] </code></pre>
+<pre><code>## [1] &quot;MCAS_10thGrade_English_A..&quot;</code></pre>
+<pre class="r"><code>favstats(~MCAS_10thGrade_English_A.., data=pruned_ma_schools)</code></pre>
+<pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
+##    0 28     65 131 441 91.09348 81.09832 353    1508</code></pre>
+<p>Number of students who got “advanced” for English. min= 0, max=441. Mean(91) is larger than median (65). Becareful of outliers. 1508 values missing.</p>
+</div>
+<div id="note" class="section level3">
+<h3>NOTE:</h3>
+<p>In the process of putting together the data appendix, we had several merge issues with GitHub. We split up the descriptions of the variables, and as it turns out we were looking at slightly different version of the data set. The descriptions below look at the following modification to <code>pruned_ma_schools</code></p>
+<pre class="r"><code>##get rid of schools without tenth grade 
+#subset(pruned_ma_schools,
+#       !is.na(pruned_ma_schools$MCAS_10thGrade_Math_A..))</code></pre>
+<p>This should get rid of any schools that do not have 10th grade. This means that in all of the following variables, the R output from <code>favstats</code> does not match the description. In the coming days we will be looking at how to resolve our merge errors and find consistency in our variable descriptions and our data set.</p>
+</div>
+<div id="mcas_10thgrade_english_a..-1" class="section level3">
+<h3>40) MCAS_10thGrade_English_A..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_A.., data = pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median  Q3 max     mean       sd   n missing
-##    0 28.5     65 131 441 91.61254 81.03599 351       0</code></pre>
+<pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
+##    0 28     65 131 441 91.09348 81.09832 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_A..</code> : an <code>int</code> of Advanced scores in English. The minimum number of Advanced scores is 0, maximum is 441. The mean is 91.61, which is somewhat far from the median of 65. There are no missing values.</p>
+</div>
 <div id="mcas_10thgrade_english_cpi" class="section level3">
 <h3>41) MCAS_10thGrade_English_CPI</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_CPI, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median   Q3 max     mean       sd   n missing
-##   60 96   98.1 99.3 100 96.79202 4.295785 351       0</code></pre>
+##   60 96   98.1 99.3 100 96.72521 4.378358 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_CPI</code> : the <code>num</code> measure of Composite Performance Index for English. The minimum index measure is 60, maximum is 100. The mean is 96.79 is fairly close to the median of 98.1. There are no missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_p.." class="section level3">
 <h3>42) MCAS_10thGrade_Math_P..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_P.. , data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median   Q3 max     mean      sd   n missing
-##    1 22     37 59.5 245 45.38177 34.1875 351       0</code></pre>
+##    1 22     37 59.5 245 45.38177 34.1875 351    1510</code></pre>
 <ol start="42" style="list-style-type: decimal">
 <li><code>MCAS_10thGrade_Math_P..</code> : an <code>int</code> of Proficient scores in Math. The minimum is 1 Proficient score, maximum of 245. The mean is 45.38, which is reasonably close to the median of 37. There are no missing values.</li>
 </ol>
@@ -315,181 +539,182 @@ pruned_ma_schools &lt;- subset(pruned_ma_schools,
 <h3>43) MCAS_10thGrade_English_Incl..in.SGP…</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_Incl..in.SGP..., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min    Q1 median     Q3 max     mean       sd   n missing
-##    2 71.25  149.5 249.75 757 166.9914 116.9473 350       1</code></pre>
+##    1 69.75    148 249.25 757 166.0625 117.2613 352    1509</code></pre>
 <p><code>MCAS_10thGrade_English_Incl..in.SGP...</code> : an <code>int</code> of the students included in the Student Growth Percentile in English. The minimum is 2 students included, maximum of 757. The median and mean likely don’t hold much weight in this context, but they are reasonably close. There is 1 missing value.</p>
 </div>
 <div id="mcas_10thgrade_english_ni.." class="section level3">
 <h3>44) MCAS_10thGrade_English_NI..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_NI.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  2      5 11  97 9.988604 13.69045 351       0</code></pre>
+##    0  2      5 11  97 9.949008 13.66244 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_NI..</code> : an <code>int</code> of Needs Improvement scores in English. The minimum is 0 scores, maximum of 97 scores. The median (5) is fairly close to the mean (9.988). No missing values.</p>
 </div>
 <div id="mcas_10thgrade_english_p.." class="section level3">
 <h3>45) MCAS_10thGrade_English_P..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_P.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
-##    2 39     67 112 480 84.21937 65.29923 351       0</code></pre>
+##    2 39     67 112 480 83.77904 65.37507 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_P..</code> : an <code>int</code> of Proficient scores in English.There is a minimum of 2 scores, maximum of 480. The median (67) and mean(84.22) are close in the context of the range of the variable No missing values.</p>
 </div>
 <div id="mcas_10thgrade_english_p.a.." class="section level3">
 <h3>46) MCAS_10thGrade_English_P.A..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_P.A.., data = pruned_ma_schools)</code></pre>
-<pre><code>##  min   Q1 median  Q3 max     mean       sd   n missing
-##    2 78.5    149 260 813 175.8319 124.1905 351       0</code></pre>
+<pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
+##    2 76    148 259 813 174.8725 124.4896 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_P.A..</code> : an <code>int</code> of Proficient or Advanced scores in English. The minimum is 2 scores, maximum of 813. The median (149) and mean (175.83) are close in the context of the range of the variable. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_english_sgp" class="section level3">
 <h3>47) MCAS_10thGrade_English_SGP</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_SGP, data = pruned_ma_schools)</code></pre>
 <pre><code>##   min   Q1 median   Q3 max     mean       sd   n missing
-##  25.5 42.5     50 58.5  88 50.83483 11.73084 333      18</code></pre>
+##  25.5 42.5     50 58.5  88 50.83483 11.73084 333    1528</code></pre>
 <p><code>MCAS_10thGrade_English_SGP</code> : a <code>num</code> measure of Student Growth Percentile in English. The minimum is 25.5, maximum of 88. The median and mean are very close. There are 88 missing values.</p>
 </div>
 <div id="mcas_10thgrade_english_stud..incl" class="section level3">
 <h3>48) MCAS_10thGrade_English_Stud..Incl…</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_Stud..Incl..., data = pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median    Q3 max     mean       sd   n missing
-##   10 86    162 286.5 925 189.7977 133.2498 351       0</code></pre>
+<pre><code>##  min Q1 median  Q3 max    mean       sd   n missing
+##   10 83    162 286 925 188.779 133.5562 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_Stud..Incl...</code> : an <code>int</code> of the number of students included in the measure of SGP. The minimum is 10, maximum of 925. The median (162) and mean (189.8) are somewhat close, but the standard deviation (133.25) is surprisingly large. There are no missing values.</p>
 </div>
 <div id="mcas_10thgrade_english_w.f.." class="section level3">
 <h3>49) MCAS_10thGrade_English_W.F..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_English_W.F.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  0      2  4  43 3.977208 6.671864 351       0</code></pre>
+##    0  0      2  4  43 3.957507 6.658121 353    1508</code></pre>
 <p><code>MCAS_10thGrade_English_W.F..</code> : an <code>int</code> of Warning/Failing scores in English. The minimum is 0, maximum of 43. The median (2) and mean (4) are very close. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_a.." class="section level3">
 <h3>50) MCAS_10thGrade_Math_A..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_A.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median  Q3 max     mean       sd   n missing
-##    0 37     81 153 492 105.6325 89.80674 351       0</code></pre>
+##    0 37     81 153 492 105.6325 89.80674 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_A..</code> : an <code>int</code> of Advanced scores in Math. The minimum is 0, maximum of 492. The mean (105) and median (81) are somewhat far, so it may be worth looking into if there are any outliers. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_cpi" class="section level3">
 <h3>51) MCAS_10thGrade_Math_CPI</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_CPI, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min   Q1 median Q3 max     mean       sd   n missing
-##   30 86.6   92.2 96 100 89.55613 9.896502 351       0</code></pre>
+##   30 86.6   92.2 96 100 89.55613 9.896502 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_CPI</code> : a <code>num</code> measure of Composite Performance Index for Math. The minimum is 30, maximum is 100. The median (92.2) and mean (89.56) are close. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_incl..in.sgp" class="section level3">
 <h3>52) MCAS_10thGrade_Math_Incl..in.SGP…</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_Incl..in.SGP..., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min    Q1 median    Q3 max     mean       sd   n missing
-##    1 73.25  148.5 249.5 761 167.3686 117.3659 350       1</code></pre>
+##    1 73.25  148.5 249.5 761 167.3686 117.3659 350    1511</code></pre>
 <p><code>MCAS_10thGrade_Math_Incl..in.SGP...</code> : an <code>int</code> of the students included in the Student Growth Percentile in Math.The minimum is 1, maximum of 761 students. The median (148.5) and mean (167.37) are pretty close. 1 missing value.</p>
 </div>
 <div id="mcas_10thgrade_math_ni.." class="section level3">
 <h3>53) MCAS_10thGrade_Math_NI..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_NI.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0 10     17 31 221 26.69516 27.74972 351       0</code></pre>
+##    0 10     17 31 221 26.69516 27.74972 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_NI..</code> : an <code>int</code> of Needs Improvement scores in Math. The minimum is 0, maximum of 221. The median (17) and mean (26.7) are fairly close. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_p.a.." class="section level3">
 <h3>54) MCAS_10thGrade_Math_P.A..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_P.A.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min   Q1 median  Q3 max     mean       sd   n missing
-##    2 61.5    126 222 587 151.0142 110.9136 351       0</code></pre>
+##    2 61.5    126 222 587 151.0142 110.9136 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_P.A..</code> : an <code>int</code> of Proficient or Advanced scores in Math. The minimum is 2 scores, maximum of 587 scores. The median (126) and mean (151) are moderately close, but the standard deviation is surprisingly large and should be looked at more closely. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_sgp" class="section level3">
 <h3>55) MCAS_10thGrade_Math_SGP</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_SGP, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min   Q1 median Q3  max     mean       sd   n missing
-##   16 42.5     51 58 89.5 50.57508 12.52048 333      18</code></pre>
+##   16 42.5     51 58 89.5 50.57508 12.52048 333    1528</code></pre>
 <p><code>MCAS_10thGrade_Math_SGP</code>: a <code>num</code> measure of Student Growth Percentile in English. The minimum percentile is 16, the maximum is 89.5. The median (51) and mean (50.57) are very close. There are 18 missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_stud..incl" class="section level3">
 <h3>56) MCAS_10thGrade_Math_Stud..Incl…</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_Stud..Incl..., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median    Q3 max     mean       sd   n missing
-##   10 86    161 287.5 925 189.5157 133.3775 351       0</code></pre>
+##   10 86    161 287.5 925 189.5157 133.3775 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_Stud..Incl...</code> : an <code>int</code> of the number of students included in the measure of SGP. The minimum is 10, maximum of 925. The median (161) and mean (189.5) are somewhat far apart, and so should be looked at more closely. No missing values.</p>
 </div>
 <div id="mcas_10thgrade_math_w.f.." class="section level3">
 <h3>57) MCAS_10thGrade_Math_W.F..</h3>
 <pre class="r"><code>favstats(~MCAS_10thGrade_Math_W.F.., data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  3      6 12 136 11.80627 18.57347 351       0</code></pre>
+##    0  3      6 12 136 11.80627 18.57347 351    1510</code></pre>
 <p><code>MCAS_10thGrade_Math_W.F..</code> : an <code>int</code> of Warning/Failing scores in Math. The minimum is 0 scores, maximum of 136 scores. The median (6) and mean (11.8) are fairly close. The standard deviation is larger than the mean, however, and should be analyzed. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_english_a" class="section level3">
 <h3>58) X..MCAS_10thGrade_English_A</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_English_A, data = pruned_ma_schools)</code></pre>
-<pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0 29     45 62  90 44.98575 21.46392 351       0</code></pre>
+<pre><code>##  min Q1 median Q3 max     mean      sd   n missing
+##    0 28     45 62  90 44.73088 21.6683 353    1508</code></pre>
 <p><code>X..MCAS_10thGrade_English_A</code> : an <code>int</code> percent of Advanced scores in English. The minimum is 0 scores, maximum of 90 scores. The median (45) and mean (44.9) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_english_ni" class="section level3">
 <h3>59) X..MCAS_10thGrade_English_NI</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_English_NI, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  1      4  8  60 6.131054 7.232461 351       0</code></pre>
+##    0  1      4  8  60 6.266289 7.583057 353    1508</code></pre>
 <p><code>X..MCAS_10thGrade_English_NI</code> : an <code>int</code> percent of Needs Improvement scores in English. The minimum is 0, maximum of 60. The median (4) and mean (6.13) are fairly close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_english_p" class="section level3">
 <h3>60) X..MCAS_10thGrade_English_P</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_English_P, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    9 34     46 59  85 46.52137 15.84889 351       0</code></pre>
+##    9 34     46 59  85 46.62606 15.90496 353    1508</code></pre>
 <p><code>X..MCAS_10thGrade_English_P</code> : an <code>int</code> percent of Proficient scores in English. The minimum is 9 percent, maximum is 85 percent. The median (46) and mean (46.5) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_english_p.a" class="section level3">
 <h3>61) X..MCAS_10thGrade_English_P.A</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_English_P.A, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##   13 89     95 98 100 91.49858 10.40656 351       0</code></pre>
+##   13 89     95 98 100 91.34844 10.62669 353    1508</code></pre>
 <p><code>X..MCAS_10thGrade_English_P.A</code> : an <code>int</code> percent of Proficient or Advanced scores in English. The minimum percent is 13, maximum is 100. The median (95) and mean (91) are close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_english_w.f" class="section level3">
 <h3>62) X..MCAS_10thGrade_English_W.F</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_English_W.F, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  0      1  3  44 2.376068 4.105174 351       0</code></pre>
+##    0  0      1  3  44 2.390935 4.115537 353    1508</code></pre>
 <p><code>X..MCAS_10thGrade_English_W.F</code> : an <code>int</code> percent of Warning/Failing scores in English. The minimum is 0 percent, maximum is 44 percent. The median (1) and mean (2.38) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_math_a" class="section level3">
 <h3>63) X..MCAS_10thGrade_Math_A</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_Math_A, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0 39     53 68  97 52.23077 20.95426 351       0</code></pre>
+##    0 39     53 68  97 52.23077 20.95426 351    1510</code></pre>
 <p><code>X..MCAS_10thGrade_Math_A</code> : an <code>int</code> percent of Advanced scores in Math. The minimum is 0 percent, maximum is 97. The median (53) and mean (52.23) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_math_ni" class="section level3">
 <h3>64) X..MCAS_10thGrade_Math_NI</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_Math_NI, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  8     14 21  65 15.54986 10.47594 351       0</code></pre>
+##    0  8     14 21  65 15.54986 10.47594 351    1510</code></pre>
 <p><code>X..MCAS_10thGrade_Math_NI</code> : an <code>int</code> percent of Needs Improvement scores in Math. The minimum is 0, maximum is 65. The median (14) and mean (15.55) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_math_p" class="section level3">
 <h3>65) X..MCAS_10thGrade_Math_P</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_Math_P, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    3 20     25 30  55 25.13675 8.396502 351       0</code></pre>
+##    3 20     25 30  55 25.13675 8.396502 351    1510</code></pre>
 <p><code>X..MCAS_10thGrade_Math_P</code> : an <code>int</code> percent of Proficient scores in Math. The minimum is 3 percent, maximum of 55 percent. The median (25) and mean (25.13) are very close. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_math_p.a" class="section level3">
 <h3>66) X..MCAS_10thGrade_Math_P.A</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_Math_P.A, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##   10 71     82 90 100 77.34758 17.71743 351       0</code></pre>
+##   10 71     82 90 100 77.34758 17.71743 351    1510</code></pre>
 <p><code>X..MCAS_10thGrade_Math_P.A</code> : an <code>int</code> percent of Proficient or Advanced scores in Math. The minimum is 10 percent, maximum is 100 percent. The median (82) and mean (77) are far in terms of the other percentage variables like this, so should be looked at. No missing values.</p>
 </div>
 <div id="x..mcas_10thgrade_math_w.f" class="section level3">
 <h3>67) X..MCAS_10thGrade_Math_W.F</h3>
 <pre class="r"><code>favstats(~X..MCAS_10thGrade_Math_W.F, data = pruned_ma_schools)</code></pre>
 <pre><code>##  min Q1 median Q3 max     mean       sd   n missing
-##    0  2      4  9  80 7.105413 9.534763 351       0</code></pre>
+##    0  2      4  9  80 7.105413 9.534763 351    1510</code></pre>
 <p><code>X..MCAS_10thGrade_Math_W.F</code> : an <code>int</code> percent of Warning/Failing scores in Math. The minimum is 0 percent, the maximum is 90 percent. The median (4) and mean (7.1) are fairly close. No missing values.</p>
 </div>
 </div>
 <div id="key-next-steps" class="section level1">
 <h1>Key Next Steps</h1>
 <ol style="list-style-type: decimal">
+<li>Fix merge errors and consolidate to a common data set; resolve any and all issues this has caused.</li>
 <li>Eliminate the variables that we know off-hand are not useful in our analysis. We already did some of this, but we can probably narrow it down further.</li>
 <li>Test for collinearity between variables that contain related information (for example, we will likely not include both Salary Totals and Average Salary, which both pertain to the salary of teachers).</li>
 <li>Create a “Percent Proficient” variable to be used as our response variable out of the categories provided.</li>

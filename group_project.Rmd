@@ -2,7 +2,9 @@
 title: "Group Project"
 author: "Maggie Carttar, Yue Kuang, Emma Livingston"
 date: "November 6, 2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -21,6 +23,8 @@ ma_schools<-read.csv("ma_schools.csv")
 ```{r}
 pruned_ma_schools <- ma_schools %>%
   select(X10_Enrollment, TOTAL_Enrollment, First.Language.Not.English, X..English.Language.Learner, English.Language.Learner, X..English.Language.Learner, Students.With.Disabilities, X..Students.With.Disabilities, High.Needs, X..High.Needs, Economically.Disadvantaged, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College, MCAS_10thGrade_English_A.., MCAS_10thGrade_English_CPI, MCAS_10thGrade_Math_P.., MCAS_10thGrade_English_Incl..in.SGP..., MCAS_10thGrade_English_NI.., MCAS_10thGrade_English_P.., MCAS_10thGrade_English_P.A.., MCAS_10thGrade_English_SGP, MCAS_10thGrade_English_Stud..Incl..., MCAS_10thGrade_English_W.F.., MCAS_10thGrade_Math_A.., MCAS_10thGrade_Math_CPI, MCAS_10thGrade_Math_Incl..in.SGP..., MCAS_10thGrade_Math_NI.., MCAS_10thGrade_Math_P.., MCAS_10thGrade_Math_P.A.., MCAS_10thGrade_Math_SGP, MCAS_10thGrade_Math_Stud..Incl..., MCAS_10thGrade_Math_W.F.., X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)
+
+subset(pruned_ma_schools,!is.na(pruned_ma_schools$MCAS_10thGrade_Math_A..))
 
 ```
 
@@ -356,7 +360,7 @@ favstats(~X..Dropped.Out, data=pruned_ma_schools)
 Percentage of students who dropped out from the school
 min= 0, max=71.4(this is high). Mean(7) is larger than median (2.9). Becareful of outliers.  1485 values missing.
 
-### 39) X..Permanently.Excluded
+### 38) X..Permanently.Excluded
 
 ```{r}
 colnames(pruned_ma_schools)[38] 
