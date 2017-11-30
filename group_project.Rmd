@@ -638,12 +638,15 @@ favstats(~X..MCAS_10thGrade_Math_W.F, data = pruned_ma_schools)
 5. Rename some of the variables so they make more sense. We should also consider re-ordering them.
 6. Get assistance with managing GitHub.
 
+
 ### creating the response variable: the average of percentage of students who reached the level of proficient/advanced in Math and English. 
 ```{r}
 pruned_ma_schools$proficiency_index = (pruned_ma_schools$X..MCAS_10thGrade_English_P.A + pruned_ma_schools$X..MCAS_10thGrade_Math_P.A) / 2
 ```
-###get rid of schools that dont have mcas score data
+###get rid of schools that don't have mcas score data
 ```{r}
 str(pruned_ma_schools, give.attr = FALSE)
 pruned_ma_schools<- na.omit(pruned_ma_schools)
+## got rid of 97 rows
 ```
+
