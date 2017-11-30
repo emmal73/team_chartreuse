@@ -10,3 +10,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+##Assess the model(finalModel)
+```{r}
+##bigModel<-lm(proficiency_index~x1+x2+x3..., data=pruned_ma_schools)
+##summary(bigModel)
+##anova(bigModel)
+```
+
