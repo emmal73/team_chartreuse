@@ -27,11 +27,23 @@ pruned_ma_schools <- pruned_ma_schools %>%
 ## get rid of schools that don't offer 10th grade
 ```
 
+##change the name of variables
+```{r}
+pruned_ma_schools <- pruned_ma_schools %>%
+  rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
+```
+
 ##multicollinearity before stepwise selection
 ```{r}
 require(mosaic)
+
 stepwise_ma_schools <- pruned_ma_schools %>%
   select_("X..English.Language.Learner","X..Students.With.Disabilities","X..Economically.Disadvantaged","X..White","X..Females","Average.Class.Size","Average.Salary","Average.Expenditures.per.Pupil","proficiency_index")
+
+##use this one
+stepwise_ma_schools <- pruned_ma_schools %>%
+  select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index","avg_salary","white")
+
 cor1<-cor(stepwise_ma_schools)
 cor1
 pairs(~X..English.Language.Learner + X..Students.With.Disabilities + X..Economically.Disadvantaged + X..White + X..Females + Average.Class.Size + Average.Salary + Average.Expenditures.per.Pupil+proficiency_index, data = pruned_ma_schools, main = "Simple Scatterplot Matrix")
@@ -49,10 +61,7 @@ fullMSE <- (summary(full_model)$sigma)^2
 stepwise_full <- step(null_model, scope = list(upper = full_model), scale = fullMSE, direction = "both")
 ```
 
-```{r}
-pruned_ma_schools <- pruned_ma_schools %>%
-  rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
-```
+
 
  
 ##Assess the model(finalModel)
