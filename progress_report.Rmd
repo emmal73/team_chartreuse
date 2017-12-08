@@ -33,7 +33,7 @@ pruned_ma_schools <- pruned_ma_schools %>%
   rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
 ```
 
-##multicollinearity before stepwise selection
+##correlation matrix for variables before stepwise selection
 ```{r}
 require(mosaic)
 
