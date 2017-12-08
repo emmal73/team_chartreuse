@@ -51,7 +51,7 @@ pairs(~X..English.Language.Learner + X..Students.With.Disabilities + X..Economic
 ```{r}
 null_model <- lm(proficiency_index ~ 1, data = pruned_ma_schools)
 
-full_model <- lm(proficiency_index ~ X..English.Language.Learner + X..Students.With.Disabilities + X..Economically.Disadvantaged + X..White + X..Females + Average.Class.Size + Average.Salary + Average.Expenditures.per.Pupil, data = pruned_ma_schools)
+full_model <- lm(proficiency_index ~ english_language_learner+disabilities+economically_disadvantaged+females+avg_class_size+avg_expenditures_pupil+proficiency_index+avg_salary+white, data = pruned_ma_schools)
 
 fullMSE <- (summary(full_model)$sigma)^2
 
