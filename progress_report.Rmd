@@ -39,6 +39,7 @@ stepwise_full <- step(null_model, scope = list(upper = full_model), scale = full
 ```
 
 ```{r}
+# FINAL MODEL
 pruned_ma_schools %>%
   rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
 ```
@@ -53,7 +54,6 @@ pruned_ma_schools %>%
 
 
 ```{r}
-# FINAL MODEL
 model <- lm(proficiency_index ~ X..Economically.Disadvantaged + X..Students.With.Disabilities + 
     Average.Expenditures.per.Pupil + X..English.Language.Learner + 
     X..Females + Average.Class.Size, data = pruned_ma_schools)
