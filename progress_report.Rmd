@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 library(dplyr)
 ```
 
@@ -46,6 +47,11 @@ full_model <- lm(proficiency_index ~ X..English.Language.Learner + X..Students.W
 fullMSE <- (summary(full_model)$sigma)^2
 
 stepwise_full <- step(null_model, scope = list(upper = full_model), scale = fullMSE, direction = "both")
+```
+
+```{r}
+pruned_ma_schools %>%
+  rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
 ```
 
  
