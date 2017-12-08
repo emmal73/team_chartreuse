@@ -37,9 +37,6 @@ pruned_ma_schools <- pruned_ma_schools %>%
 ```{r}
 require(mosaic)
 
-stepwise_ma_schools <- pruned_ma_schools %>%
-  select_("X..English.Language.Learner","X..Students.With.Disabilities","X..Economically.Disadvantaged","X..White","X..Females","Average.Class.Size","Average.Salary","Average.Expenditures.per.Pupil","proficiency_index")
-
 ##use this one
 stepwise_ma_schools <- pruned_ma_schools %>%
   select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index","avg_salary","white")
