@@ -74,7 +74,7 @@ summary(model)
 ##correlation matrix for final model
 ```{r}
 final_ma_schools <- pruned_ma_schools %>%
-  select_("X..English.Language.Learner","X..Students.With.Disabilities","X..Economically.Disadvantaged","X..Females","Average.Class.Size","Average.Expenditures.per.Pupil","proficiency_index")
+  select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index")
 cor2<-cor(final_ma_schools)
 cor2
 ```
