@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
 
 ```{r}
@@ -44,4 +45,12 @@ stepwise_full <- step(null_model, scope = list(upper = full_model), scale = full
 ##anova(bigModel)
 ```
 
+
+```{r}
+model <- lm(proficiency_index ~ X..Economically.Disadvantaged + X..Students.With.Disabilities + 
+    Average.Expenditures.per.Pupil + X..English.Language.Learner + 
+    X..Females + Average.Class.Size, data = pruned_ma_schools)
+
+summary(model)
+```
 
