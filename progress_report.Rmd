@@ -27,11 +27,20 @@ pruned_ma_schools <- pruned_ma_schools %>%
 ## get rid of schools that don't offer 10th grade
 ```
 
-##multicollinearity before stepwise selection
+##change the name of variables
+```{r}
+pruned_ma_schools <- pruned_ma_schools %>%
+  rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
+```
+
+##correlation matrix for variables before stepwise selection
 ```{r}
 require(mosaic)
+
+##use this one
 stepwise_ma_schools <- pruned_ma_schools %>%
-  select_("X..English.Language.Learner","X..Students.With.Disabilities","X..Economically.Disadvantaged","X..White","X..Females","Average.Class.Size","Average.Salary","Average.Expenditures.per.Pupil","proficiency_index")
+  select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index","avg_salary","white")
+
 cor1<-cor(stepwise_ma_schools)
 cor1
 pairs(~X..English.Language.Learner + X..Students.With.Disabilities + X..Economically.Disadvantaged + X..White + X..Females + Average.Class.Size + Average.Salary + Average.Expenditures.per.Pupil+proficiency_index, data = pruned_ma_schools, main = "Simple Scatterplot Matrix")
@@ -49,6 +58,8 @@ null_model <- lm(proficiency_index ~ 1, data = pruned_ma_schools)
 
 full_model <- lm(proficiency_index ~ english_language_learner + disabilities + economically_disadvantaged + white + females + avg_class_size + avg_salary + avg_expenditures_pupil, data = pruned_ma_schools)
 
+full_model <- lm(proficiency_index ~ english_language_learner+disabilities+economically_disadvantaged+females+avg_class_size+avg_expenditures_pupil+proficiency_index+avg_salary+white, data = pruned_ma_schools)
+
 fullMSE <- (summary(full_model)$sigma)^2
 
 stepwise_full <- step(null_model, scope = list(upper = full_model), scale = fullMSE, direction = "both")
@@ -63,6 +74,15 @@ summary(zesty)
 anova(zesty)
 ```
 
+
+```{r}
+# FINAL MODEL
+model <- lm(proficiency_index ~ economically_disadvantaged + disabilities + 
+    avg_expenditures_pupil + english_language_learner + 
+    females + avg_class_size, data = pruned_ma_schools)
+
+summary(model)
+```
 
 
 ##correlation matrix for final model
