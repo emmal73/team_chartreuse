@@ -59,6 +59,7 @@ stepwise_full <- step(null_model, scope = list(upper = full_model), scale = full
 
 ## Conditions and Unusual Points
 ```{r}
+zesty <-lm(proficiency_index ~ economically_disadvantaged + disabilities + avg_expenditures_pupil + english_language_learner + females + avg_class_size,  data=pruned_ma_schools)
 plot(zesty)
 ```
 
@@ -67,9 +68,10 @@ plot(zesty)
 43 = Brockton Champion High School
 51 = Chelsea High
  
-##Assess the model(finalModel)
+The only point that has an unusual Cook's Distance is point 20, the Boston International School. We decided to include it in our calculations but keep it in mind because outliers often hold valuable information, and we already know that this model cannot be interpreted outside of the context of analyzing relationships in Massachusetts. 
+
+##Assess the Model
 ```{r}
-zesty <-lm(proficiency_index ~ economically_disadvantaged + disabilities + avg_expenditures_pupil + english_language_learner + females + avg_class_size,  data=pruned_ma_schools)
 summary(zesty)
 anova(zesty)
 ```
