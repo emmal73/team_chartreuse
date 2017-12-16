@@ -1,21 +1,23 @@
 ---
-title: "Progress Report"
-author: "Emma Livingston"
-date: "November 29, 2017"
+title: "Education in Massachusetts"
+author: "Maggie Carttar, Yue Kuang, Emma Livingston"
+date: "December 14, 2017"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(mosaic)
 library(dplyr)
 ```
 
-```{r}
+
+```{r, include = FALSE, warning = FALSE}
 ma_schools<-read.csv("ma_schools.csv")
 
 pruned_ma_schools <- ma_schools %>%
-  select(X10_Enrollment, TOTAL_Enrollment, X..English.Language.Learner, X..Students.With.Disabilities, X..High.Needs, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College,  X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)
+  select(School.Name, School.Code, X10_Enrollment, TOTAL_Enrollment, X..English.Language.Learner, X..Students.With.Disabilities, X..High.Needs, X..Economically.Disadvantaged, X..African.American, X..Asian, X..Hispanic, X..White, X..Native.American, X..Native.Hawaiian..Pacific.Islander, X..Multi.Race..Non.Hispanic, X..Males, X..Females, Total...of.Classes, Average.Class.Size, Number.of.Students, Salary.Totals, Average.Salary, FTE.Count, In.District.Expenditures, Total.In.district.FTEs, Average.In.District.Expenditures.per.Pupil, Total.Expenditures, Total.Pupil.FTEs, Average.Expenditures.per.Pupil, X..Graduated, X..Still.in.School, X..Non.Grad.Completers, X..GED, X..Dropped.Out, X..Permanently.Excluded, X..Attending.College,  X..MCAS_10thGrade_English_A, X..MCAS_10thGrade_English_NI, X..MCAS_10thGrade_English_P, X..MCAS_10thGrade_English_P.A, X..MCAS_10thGrade_English_W.F, X..MCAS_10thGrade_Math_A, X..MCAS_10thGrade_Math_NI, X..MCAS_10thGrade_Math_P, X..MCAS_10thGrade_Math_P.A, X..MCAS_10thGrade_Math_W.F)
 
 pruned_ma_schools$proficiency_index = (pruned_ma_schools$X..MCAS_10thGrade_English_P.A + pruned_ma_schools$X..MCAS_10thGrade_Math_P.A) / 2
 
@@ -27,45 +29,43 @@ pruned_ma_schools <- pruned_ma_schools %>%
 ## get rid of schools that don't offer 10th grade
 ```
 
-##change the name of variables
-```{r}
+
+```{r, include = FALSE, warning = FALSE}
 pruned_ma_schools <- pruned_ma_schools %>%
   rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
 ```
 
-##correlation matrix for variables before stepwise selection
+##Correlation Matrix
 ```{r}
-require(mosaic)
-
-##use this one
 stepwise_ma_schools <- pruned_ma_schools %>%
   select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index","avg_salary","white")
 
 cor1<-cor(stepwise_ma_schools)
 cor1
-pairs(~X..English.Language.Learner + X..Students.With.Disabilities + X..Economically.Disadvantaged + X..White + X..Females + Average.Class.Size + Average.Salary + Average.Expenditures.per.Pupil+proficiency_index, data = pruned_ma_schools, main = "Simple Scatterplot Matrix")
+pairs(~english_language_learner + disabilities + economically_disadvantaged + white + females + avg_class_size + avg_salary + avg_expenditures_pupil +proficiency_index, data = pruned_ma_schools, main = "Simple Scatterplot Matrix")
+
 
 ```
 
-```{r}
-pruned_ma_schools <- pruned_ma_schools %>%
-  rename(english_language_learner = X..English.Language.Learner, disabilities = X..Students.With.Disabilities, economically_disadvantaged = X..Economically.Disadvantaged, white = X..White, females = X..Females, avg_class_size = Average.Class.Size, avg_salary = Average.Salary, avg_expenditures_pupil = Average.Expenditures.per.Pupil)
-```
 
-## Stepwise Selection(finalModel)
+## Stepwise Selection
 ```{r}
 null_model <- lm(proficiency_index ~ 1, data = pruned_ma_schools)
-
 full_model <- lm(proficiency_index ~ english_language_learner + disabilities + economically_disadvantaged + white + females + avg_class_size + avg_salary + avg_expenditures_pupil, data = pruned_ma_schools)
-
-full_model <- lm(proficiency_index ~ english_language_learner+disabilities+economically_disadvantaged+females+avg_class_size+avg_expenditures_pupil+proficiency_index+avg_salary+white, data = pruned_ma_schools)
-
+full_model <- lm(proficiency_index ~ english_language_learner + disabilities + economically_disadvantaged + females + avg_class_size + avg_expenditures_pupil + avg_salary + white, data = pruned_ma_schools)
 fullMSE <- (summary(full_model)$sigma)^2
-
 stepwise_full <- step(null_model, scope = list(upper = full_model), scale = fullMSE, direction = "both")
 ```
 
+## Conditions and Unusual Points
+```{r}
+plot(zesty)
+```
 
+20 = Boston International School
+40 = William McKinley
+43 = Brockton Champion High School
+51 = Chelsea High
  
 ##Assess the model(finalModel)
 ```{r}
@@ -75,26 +75,4 @@ anova(zesty)
 ```
 
 
-```{r}
-# FINAL MODEL
-model <- lm(proficiency_index ~ economically_disadvantaged + disabilities + 
-    avg_expenditures_pupil + english_language_learner + 
-    females + avg_class_size, data = pruned_ma_schools)
-
-summary(model)
-```
-
-
-##correlation matrix for final model
-```{r}
-final_ma_schools <- pruned_ma_schools %>%
-  select_("english_language_learner","disabilities","economically_disadvantaged","females","avg_class_size","avg_expenditures_pupil","proficiency_index")
-cor2<-cor(final_ma_schools)
-cor2
-```
-
-## Cooks Distance
-```{r}
-plot(zesty)
-```
 
